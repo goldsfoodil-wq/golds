@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>שולחן מלא | קייטרינג כשר למהדרין לאירועים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --olive-950:#222b1c;
+    --olive-900:#2c3722;
+    --olive-800:#3a4830;
+    --cream:#f3ecda;
+    --cream-dim:#d9d0b6;
+    --gold:#cf9d3e;
+    --gold-bright:#e3b658;
+    --brick:#a8432f;
+    --brick-bright:#c4583f;
+    --line:rgba(243,236,218,0.16);
+    --radius:2px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--olive-950);
+    color:var(--cream);
+    font-family:'Rubik',sans-serif;
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{
+    font-family:'Frank Ruhl Libre',serif;
+    font-weight:700;
+    line-height:1.15;
+    color:var(--cream);
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  ::selection{background:var(--gold);color:var(--olive-950);}
+  :focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    font-family:'Rubik',sans-serif;
+    font-size:13px;
+    letter-spacing:.12em;
+    color:var(--gold-bright);
+    font-weight:600;
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--gold-bright);}
+
+  /* scallop divider — signature element: a hand-cut "tablecloth edge" */
+  .scallop{
+    width:100%;height:18px;
+    background-image: radial-gradient(circle at 9px -3px, transparent 9px, var(--olive-950) 9.5px);
+    background-size: 18px 18px;
+    background-repeat: repeat-x;
+  }
+  .scallop.flip{transform:rotate(180deg);}
+  .scallop.on-cream{background-image: radial-gradient(circle at 9px -3px, transparent 9px, var(--cream) 9.5px);}
+  .scallop.on-olive800{background-image: radial-gradient(circle at 9px -3px, transparent 9px, var(--olive-800) 9.5px);}
+
+  /* ===== HEADER ===== */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:rgba(34,43,28,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    max-width:1180px;margin:0 auto;padding:0 28px;
+    height:74px;display:flex;align-items:center;justify-content:space-between;
+  }
+  .brand{
+    font-family:'Frank Ruhl Libre',serif;
+    font-size:23px;font-weight:900;color:var(--cream);
+    display:flex;align-items:center;gap:10px;
+  }
+  .brand .mark{color:var(--gold-bright);font-size:26px;}
+  .nav ul{display:flex;gap:30px;list-style:none;}
+  .nav ul a{font-size:14.5px;font-weight:500;color:var(--cream-dim);transition:color .2s;position:relative;}
+  .nav ul a:hover{color:var(--gold-bright);}
+  .nav-cta{
+    background:var(--brick);color:var(--cream);
+    padding:10px 20px;border-radius:var(--radius);
+    font-weight:600;font-size:14.5px;
+    border:1px solid var(--brick-bright);
+    transition:background .2s;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--brick-bright);}
+  .nav-toggle{display:none;background:none;border:none;color:var(--cream);font-size:26px;cursor:pointer;}
+
+  @media (max-width:900px){
+    .nav ul{
+      position:fixed;top:74px;left:0;right:0;
+      background:var(--olive-900);
+      flex-direction:column;gap:0;
+      max-height:0;overflow:hidden;
+      transition:max-height .3s ease;
+      border-bottom:1px solid var(--line);
+    }
+    .nav ul.open{max-height:400px;}
+    .nav ul li{width:100%;}
+    .nav ul a{display:block;padding:16px 28px;border-top:1px solid var(--line);width:100%;}
+    .nav-toggle{display:block;}
+    .nav-cta{display:none;}
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    padding:168px 0 90px;
+    background:
+      radial-gradient(ellipse 900px 500px at 85% -10%, rgba(207,157,62,0.18), transparent 60%),
+      radial-gradient(ellipse 700px 500px at -10% 110%, rgba(168,67,47,0.18), transparent 60%),
+      var(--olive-950);
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, transparent 0 38px, var(--line) 38px 39px);
+    opacity:.5;pointer-events:none;
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center;
+    position:relative;z-index:2;
+  }
+  .hero h1{
+    font-size:clamp(40px,5.5vw,68px);
+    letter-spacing:-0.01em;
+    margin-bottom:22px;
+  }
+  .hero h1 em{
+    font-style:normal;color:var(--gold-bright);
+    display:block;
+  }
+  .hero p.lead{
+    font-size:18px;color:var(--cream-dim);max-width:480px;margin-bottom:32px;
+  }
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:15px 26px;border-radius:var(--radius);
+    font-weight:600;font-size:15px;
+    transition:transform .2s, background .2s, box-shadow .2s;
+    border:1px solid transparent;
+  }
+  .btn-primary{background:var(--gold);color:var(--olive-950);box-shadow:0 6px 0 0 #9c7325;}
+  .btn-primary:hover{background:var(--gold-bright);transform:translateY(-2px);box-shadow:0 8px 0 0 #9c7325;}
+  .btn-ghost{border-color:var(--cream-dim);color:var(--cream);}
+  .btn-ghost:hover{border-color:var(--gold-bright);color:var(--gold-bright);}
+  .hero-stats{display:flex;gap:34px;margin-top:48px;}
+  .hero-stats div b{display:block;font-family:'Frank Ruhl Libre',serif;font-size:30px;color:var(--gold-bright);}
+  .hero-stats div span{font-size:13px;color:var(--cream-dim);}
+
+  /* hero visual: a set table illustrated with simple SVG shapes */
+  .hero-plate{
+    position:relative;aspect-ratio:1/1;max-width:420px;margin:0 auto;
+  }
+  .hero-plate svg{width:100%;height:100%;}
+
+  /* ===== SECTION HEADINGS ===== */
+  section{padding:96px 0;}
+  .sec-head{max-width:620px;margin-bottom:56px;}
+  .sec-head h2{font-size:clamp(28px,3.6vw,42px);}
+  .sec-head p{color:var(--cream-dim);font-size:16.5px;margin-top:14px;}
+
+  /* ===== SERVICES ===== */
+  .services{background:var(--olive-900);}
+  .svc-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+    background:var(--line);border:1px solid var(--line);
+  }
+  .svc-card{
+    background:var(--olive-900);padding:34px 28px;
+    transition:background .25s;
+    position:relative;
+  }
+  .svc-card:hover{background:var(--olive-800);}
+  .svc-num{font-family:'Frank Ruhl Libre',serif;color:var(--gold);font-size:14px;opacity:.7;margin-bottom:18px;display:block;}
+  .svc-card h3{font-size:20px;margin-bottom:10px;}
+  .svc-card p{color:var(--cream-dim);font-size:14.5px;margin-bottom:16px;}
+  .svc-card a{font-size:14px;font-weight:600;color:var(--gold-bright);display:inline-flex;align-items:center;gap:6px;}
+  .svc-card a:hover{text-decoration:underline;}
+  @media (max-width:860px){.svc-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.svc-grid{grid-template-columns:1fr;}}
+
+  /* ===== ABOUT / KASHRUT ===== */
+  .about{background:var(--olive-950);}
+  .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center;}
+  .seal{
+    width:230px;height:230px;border-radius:50%;
+    border:2px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto;position:relative;
+  }
+  .seal::before{
+    content:"";position:absolute;inset:14px;border:1px dashed var(--gold);border-radius:50%;
+  }
+  .seal-inner{text-align:center;font-family:'Frank Ruhl Libre',serif;}
+  .seal-inner b{display:block;font-size:30px;color:var(--gold-bright);}
+  .seal-inner span{font-size:12px;color:var(--cream-dim);letter-spacing:.08em;}
+  .about-copy h2{margin-bottom:18px;}
+  .about-copy p{color:var(--cream-dim);margin-bottom:14px;font-size:16px;}
+  .about-copy p:last-child{margin-bottom:0;}
+
+  /* ===== VALUES STRIP ===== */
+  .values{background:var(--brick);padding:0;}
+  .values-grid{display:grid;grid-template-columns:repeat(5,1fr);}
+  .value-item{
+    padding:34px 18px;text-align:center;border-left:1px solid rgba(243,236,218,0.25);
+  }
+  .value-item:first-child{border-left:none;}
+  .value-item svg{width:30px;height:30px;margin-bottom:12px;color:var(--cream);}
+  .value-item span{display:block;font-size:14px;font-weight:600;}
+  @media (max-width:900px){.values-grid{grid-template-columns:repeat(2,1fr);}.value-item{border-left:none;border-bottom:1px solid rgba(243,236,218,0.25);}}
+
+  /* ===== PROCESS (real sequence -> numbered timeline) ===== */
+  .process{background:var(--olive-900);}
+  .timeline{position:relative;padding-right:34px;border-right:2px solid var(--line);}
+  .t-item{position:relative;padding-bottom:46px;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-item::before{
+    content:attr(data-n);
+    position:absolute;right:-34px;top:0;transform:translateX(50%);
+    width:46px;height:46px;border-radius:50%;
+    background:var(--olive-900);border:2px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Frank Ruhl Libre',serif;font-weight:700;color:var(--gold-bright);
+  }
+  .t-item h3{font-size:19px;margin-bottom:8px;padding-right:8px;}
+  .t-item p{color:var(--cream-dim);font-size:15px;max-width:560px;padding-right:8px;}
+
+  /* ===== TESTIMONIALS ===== */
+  .testi{background:var(--olive-950);}
+  .testi-row{display:flex;gap:24px;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin;}
+  .t-card{
+    flex:0 0 320px;background:var(--olive-900);border:1px solid var(--line);
+    padding:28px;border-radius:var(--radius);
+  }
+  .t-card .stars{color:var(--gold);letter-spacing:2px;margin-bottom:14px;font-size:15px;}
+  .t-card p{font-size:15px;color:var(--cream-dim);margin-bottom:18px;}
+  .t-card .who{font-size:13.5px;font-weight:600;color:var(--cream);}
+
+  /* ===== FAQ ===== */
+  .faq{background:var(--olive-900);}
+  .faq-list{border-top:1px solid var(--line);max-width:760px;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    width:100%;text-align:right;background:none;border:none;color:var(--cream);
+    padding:22px 4px;font-size:17px;font-weight:500;font-family:'Rubik',sans-serif;
+    display:flex;justify-content:space-between;align-items:center;cursor:pointer;
+  }
+  .faq-q .plus{font-size:22px;color:var(--gold-bright);transition:transform .25s;}
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .faq-a p{color:var(--cream-dim);padding:0 4px 22px;font-size:15px;max-width:640px;}
+
+  /* ===== CONTACT ===== */
+  .contact{background:var(--olive-950);position:relative;}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;}
+  .contact-info h2{margin-bottom:16px;}
+  .contact-info p{color:var(--cream-dim);margin-bottom:28px;max-width:420px;}
+  .phone-big{
+    font-family:'Frank Ruhl Libre',serif;font-size:34px;color:var(--gold-bright);
+    display:inline-block;margin-bottom:30px;
+  }
+  .info-row{display:flex;gap:14px;margin-bottom:16px;font-size:14.5px;color:var(--cream-dim);align-items:flex-start;}
+  .info-row svg{width:18px;height:18px;color:var(--gold);flex-shrink:0;margin-top:2px;}
+
+  form{background:var(--olive-900);border:1px solid var(--line);padding:34px;border-radius:var(--radius);}
+  .f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+  label{display:block;font-size:13px;color:var(--cream-dim);margin-bottom:6px;}
+  input,select{
+    width:100%;background:var(--olive-950);border:1px solid var(--line);
+    color:var(--cream);padding:12px 14px;border-radius:var(--radius);font-family:'Rubik',sans-serif;font-size:14.5px;
+  }
+  input:focus,select:focus{border-color:var(--gold);}
+  .full{grid-column:1/-1;}
+  .submit-btn{
+    width:100%;background:var(--brick);color:var(--cream);border:none;
+    padding:15px;font-weight:600;font-size:15.5px;border-radius:var(--radius);cursor:pointer;
+    transition:background .2s;margin-top:6px;
+  }
+  .submit-btn:hover{background:var(--brick-bright);}
+  .consent{font-size:12.5px;color:var(--cream-dim);margin-top:10px;}
+  .consent a{color:var(--gold-bright);text-decoration:underline;}
+
+  @media (max-width:900px){
+    .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr;}
+    .hero-plate{order:-1;max-width:280px;margin-bottom:20px;}
+    .f-row{grid-template-columns:1fr;}
+  }
+
+  /* ===== FOOTER ===== */
+  footer{background:var(--olive-950);border-top:1px solid var(--line);padding:50px 0 30px;}
+  .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;margin-bottom:34px;}
+  .foot-brand{font-family:'Frank Ruhl Libre',serif;font-size:20px;color:var(--cream);}
+  .foot-cols{display:flex;gap:50px;flex-wrap:wrap;}
+  .foot-col h4{font-size:13px;color:var(--gold-bright);margin-bottom:14px;letter-spacing:.06em;}
+  .foot-col a{display:block;font-size:14px;color:var(--cream-dim);margin-bottom:9px;}
+  .foot-col a:hover{color:var(--gold-bright);}
+  .foot-bottom{border-top:1px solid var(--line);padding-top:22px;font-size:13px;color:var(--cream-dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none!important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="brand" href="#top"><span class="mark">✶</span> שולחן מלא</a>
+    <ul id="navList">
+      <li><a href="#services">השירותים שלנו</a></li>
+      <li><a href="#kashrut">כשרות</a></li>
+      <li><a href="#process">איך זה עובד</a></li>
+      <li><a href="#testimonials">לקוחות מספרים</a></li>
+      <li><a href="#faq">שאלות</a></li>
+      <li><a href="#contact">צור קשר</a></li>
+    </ul>
+    <a class="nav-cta" href="tel:0501234567">050-1234567</a>
+    <button class="nav-toggle" id="navToggle" aria-label="פתיחת תפריט">☰</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">כשר למהדרין · בהשגחה רבנית</div>
+        <h1>האירוע שלך,<em>שולחן שלא נגמר.</em></h1>
+        <p class="lead">קייטרינג כשר למהדרין לכל סוגי האירועים — מבית קר עד מנה חמה, מאוכל ביתי עד שף. אנחנו דואגים לטעם, לכשרות ולשקט הנפשי שלכם.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#contact">קבלו הצעת מחיר →</a>
+          <a class="btn btn-ghost" href="#services">לכל השירותים</a>
+        </div>
+        <div class="hero-stats">
+          <div><b>22</b><span>שנות ניסיון</span></div>
+          <div><b>4,000+</b><span>אירועים</span></div>
+          <div><b>4.9★</b><span>דירוג ממוצע</span></div>
+        </div>
+      </div>
+      <div class="hero-plate" aria-hidden="true">
+        <svg viewBox="0 0 400 400" fill="none">
+          <circle cx="200" cy="200" r="170" stroke="#cf9d3e" stroke-width="1.5" stroke-dasharray="3 6" opacity="0.5"/>
+          <circle cx="200" cy="200" r="140" fill="#2c3722" stroke="#cf9d3e" stroke-width="2"/>
+          <circle cx="200" cy="200" r="110" fill="#3a4830"/>
+          <g stroke="#e3b658" stroke-width="2.5" stroke-linecap="round">
+            <path d="M150 130 v60"/>
+            <path d="M140 130 v40 a8 8 0 0 0 20 0 v-40"/>
+            <path d="M260 130 v140"/>
+            <path d="M255 130 q-10 30 0 50"/>
+          </g>
+          <ellipse cx="195" cy="205" rx="55" ry="20" fill="#a8432f"/>
+          <ellipse cx="195" cy="198" rx="55" ry="20" fill="#c4583f"/>
+          <circle cx="170" cy="195" r="6" fill="#e3b658"/>
+          <circle cx="200" cy="190" r="6" fill="#f3ecda"/>
+          <circle cx="220" cy="200" r="6" fill="#e3b658"/>
+          <path d="M70 320 q130 50 260 0" stroke="#cf9d3e" stroke-width="1" opacity="0.4"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+  <div class="scallop on-olive800" style="background-color:var(--olive-950)"></div>
+
+  <!-- SERVICES -->
+  <section id="services" class="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">השירותים שלנו</div>
+        <h2>קייטרינג מותאם לכל סוג שמחה</h2>
+        <p>מהאירוע האינטימי בבית ועד החתונה הגדולה באולם — לכל אירוע יש תפריט, היקף ושירות משלו.</p>
+      </div>
+    </div>
+    <div class="wrap" style="padding:0;">
+      <div class="svc-grid">
+        <div class="svc-card"><span class="svc-num">01</span><h3>קייטרינג לחתונה</h3><p>תפריט עשיר, תחנות מזון חמות וקרות והגשה מקצועית לכל גודל אולם.</p><a href="#contact">תפריט ומחיר ←</a></div>
+        <div class="svc-card"><span class="svc-num">02</span><h3>קייטרינג לברית</h3><p>בוקר חגיגי עם מאפים, סלטים ומנות עיקריות שמתאימות לאירוח משפחתי.</p><a href="#contact">תפריט ומחיר ←</a></div>
+        <div class="svc-card"><span class="svc-num">03</span><h3>קייטרינג לבר/בת מצווה</h3><p>תפריט שמתאים גם לילדים וגם למבוגרים, עם תוספות ושדרוגים לבחירה.</p><a href="#contact">תפריט ומחיר ←</a></div>
+        <div class="svc-card"><span class="svc-num">04</span><h3>קייטרינג לשבת חתן</h3><p>סעודות שבת מלאות עם חמין, מנות בשריות עשירות ועוגות לקינוח.</p><a href="#contact">תפריט ומחיר ←</a></div>
+        <div class="svc-card"><span class="svc-num">05</span><h3>קייטרינג לחינה</h3><p>בופה צבעוני ועשיר בהשפעה מזרחית, מותאם לאווירה החגיגית של חינה.</p><a href="#contact">תפריט ומחיר ←</a></div>
+        <div class="svc-card"><span class="svc-num">06</span><h3>קייטרינג לאזכרה</h3><p>תפריט מכובד ומתון, בליווי אדיב ושירות שמבין את האירוע.</p><a href="#contact">תפריט ומחיר ←</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / KASHRUT -->
+  <section id="kashrut" class="about">
+    <div class="wrap about-grid">
+      <div class="seal">
+        <div class="seal-inner"><b>בד״ץ</b><span>השגחה מהודרת</span></div>
+      </div>
+      <div class="about-copy">
+        <div class="eyebrow">למה זה חשוב לנו</div>
+        <h2>כשרות זה לא סעיף קטן בתפריט</h2>
+        <p>אנחנו עובדים תחת השגחה רבנית קבועה, מהקנייה ועד ההגשה. כל מנה שיוצאת מהמטבח שלנו עברה בדיקה — לא רק של כשרות, אלא של טעם, טריות ואיכות.</p>
+        <p>בלי קיצורי דרך, בלי מנות קפואות שמחממים ביום האירוע. אנחנו מאמינים שאוכל טוב מתחיל בחומרי גלם טובים, ונגמר בתשומת לב לפרטים הקטנים שהאורחים שלכם יבחינו בהם — גם אם לא ידעו להגיד למה.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES STRIP -->
+  <div class="values">
+    <div class="values-grid">
+      <div class="value-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 6 6 1-4.5 4.5L17.5 20 12 17l-5.5 3 1-6.5L3 9l6-1z"/></svg><span>כשרות מהודרת</span></div>
+      <div class="value-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>הכנה טרייה ביום האירוע</span></div>
+      <div class="value-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19h16M6 19V9l6-5 6 5v10"/></svg><span>שירות אישי מתחילה ועד הסוף</span></div>
+      <div class="value-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h18M3 6h18M3 18h18"/></svg><span>תפריט גמיש ומותאם</span></div>
+      <div class="value-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg><span>מחירים הוגנים ושקופים</span></div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <section id="process" class="process">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">איך זה עובד</div>
+        <h2>שישה שלבים, עד שהאוכל מגיע לשולחן</h2>
+      </div>
+      <div class="timeline">
+        <div class="t-item" data-n="1"><h3>משאירים פרטים</h3><p>אתם משאירים פרטי אירוע, ואנחנו חוזרים אליכם בדרך כלל בתוך שעות בודדות.</p></div>
+        <div class="t-item" data-n="2"><h3>בונים תפריט יחד</h3><p>מתאימים תפריט לסוג האירוע, מספר האורחים ורגישויות תזונתיות.</p></div>
+        <div class="t-item" data-n="3"><h3>סוגרים לוגיסטיקה</h3><p>זמני אספקה, ציוד הגשה ושאר הפרטים — סגורים מראש כדי שלא תצטרכו לחשוב על זה.</p></div>
+        <div class="t-item" data-n="4"><h3>הכנה טרייה</h3><p>הכל מוכן קרוב ככל האפשר לאירוע, מחומרי גלם טריים ובהשגחה מלאה.</p></div>
+        <div class="t-item" data-n="5"><h3>הגעה בזמן</h3><p>האוכל מגיע ארוז ומסודר, מוכן להגשה ללא עיכובים של רגע אחרון.</p></div>
+        <div class="t-item" data-n="6"><h3>אנחנו כאן גם אחרי</h3><p>לכל שינוי או שאלה ביום האירוע — הצוות שלנו זמין.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials" class="testi">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">לקוחות מספרים</div>
+        <h2>אנשים שכבר ישבו לשולחן שלנו</h2>
+      </div>
+    </div>
+    <div class="wrap testi-row">
+      <div class="t-card"><div class="stars">★★★★★</div><p>"האוכל הגיע חם, טרי, ובדיוק בזמן. האורחים שלנו עדיין מדברים על הקבב."</p><div class="who">מיכל, חתונה בפתח תקווה</div></div>
+      <div class="t-card"><div class="stars">★★★★★</div><p>"התאמה אישית מהשנייה הראשונה. הרגשנו שמישהו באמת מקשיב לצרכים שלנו."</p><div class="who">יוסי, בר מצווה</div></div>
+      <div class="t-card"><div class="stars">★★★★★</div><p>"השגחה כשרה שלא מתפשרת, ושירות שמרגיש אישי לאורך כל הדרך."</p><div class="who">רחל, שבת חתן</div></div>
+      <div class="t-card"><div class="stars">★★★★★</div><p>"בלי הפתעות, בלי איחורים — בדיוק מה שרצינו לאירוע הברית."</p><div class="who">דוד ושירה, ברית</div></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">שאלות ותשובות</div>
+        <h2>כל מה שרציתם לדעת</h2>
+      </div>
+      <div class="faq-list" id="faqList">
+        <div class="faq-item">
+          <button class="faq-q"><span>איזו רמת כשרות יש לקייטרינג?</span><span class="plus">+</span></button>
+          <div class="faq-a"><p>הקייטרינג עובד בהשגחה רבנית קבועה ובכשרות מהודרת, מקניית חומרי הגלם ועד ההגשה באירוע.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>אפשר להתאים תפריט אישי?</span><span class="plus">+</span></button>
+          <div class="faq-a"><p>בהחלט. כל תפריט נבנה מחדש לפי סוג האירוע, מספר האורחים והרגישויות התזונתיות — כולל אפשרויות צמחוניות, טבעוניות ונטולות גלוטן.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>לאיזה אזורים בארץ אתם מגיעים?</span><span class="plus">+</span></button>
+          <div class="faq-a"><p>אנחנו פועלים בכל הארץ. במשלוחים מרוחקים אנחנו מתאמים זמני אספקה מוקפדים מראש כדי לשמור על איכות וטריות.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>יש מינימום הזמנה?</span><span class="plus">+</span></button>
+          <div class="faq-a"><p>המינימום משתנה לפי סוג האירוע והמרחק. נשמח לתת מענה מדויק בשיחת התאמה קצרה.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-info">
+        <div class="eyebrow">צרו קשר</div>
+        <h2>בואו נתכנן את התפריט שלכם</h2>
+        <p>השאירו פרטים ונחזור אליכם, או התקשרו ישירות לתיאום מהיר.</p>
+        <a class="phone-big" href="tel:0501234567">050-123-4567</a>
+        <div class="info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span>info@shulchanmale.co.il</span></div>
+        <div class="info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>שירות בכל הארץ</span></div>
+        <div class="info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>ימים א'–ה', 9:00–19:00</span></div>
+      </div>
+      <form onsubmit="event.preventDefault(); this.querySelector('.submit-btn').textContent='נשלח, תודה!';">
+        <div class="f-row">
+          <div><label for="fname">שם מלא</label><input id="fname" type="text" required></div>
+          <div><label for="fphone">טלפון</label><input id="fphone" type="tel" required></div>
+        </div>
+        <div class="f-row">
+          <div><label for="ftype">סוג אירוע</label>
+            <select id="ftype">
+              <option>חתונה</option><option>שבת חתן</option><option>בר/בת מצווה</option>
+              <option>אזכרה / שבעה</option><option>אירוע עסקי</option><option>אחר</option>
+            </select>
+          </div>
+          <div><label for="fguests">מס' אורחים</label><input id="fguests" type="number" min="1"></div>
+        </div>
+        <div class="full" style="margin-bottom:14px;">
+          <label for="fdate">תאריך אירוע</label><input id="fdate" type="date">
+        </div>
+        <button class="submit-btn" type="submit">שליחת פרטים</button>
+        <p class="consent">בלחיצה על "שליחת פרטים" אני מאשר/ת <a href="#">מדיניות פרטיות</a>.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">✶ שולחן מלא</div>
+        <p style="color:var(--cream-dim);font-size:14px;margin-top:10px;max-width:260px;">קייטרינג כשר למהדרין לכל סוגי האירועים, בכל הארץ.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>שירותים</h4>
+          <a href="#services">חתונה</a><a href="#services">ברית</a><a href="#services">בר מצווה</a><a href="#services">שבת חתן</a>
+        </div>
+        <div class="foot-col">
+          <h4>חברה</h4>
+          <a href="#kashrut">כשרות</a><a href="#testimonials">המלצות</a><a href="#faq">שאלות ותשובות</a>
+        </div>
+        <div class="foot-col">
+          <h4>צרו קשר</h4>
+          <a href="tel:0501234567">050-123-4567</a><a href="mailto:info@shulchanmale.co.il">info@shulchanmale.co.il</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 שולחן מלא — קייטרינג כשר למהדרין. כל הזכויות שמורות.</span>
+      <span>אתר זה הוא דוגמה עיצובית בלבד</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', function(){
+    document.getElementById('navList').classList.toggle('open');
+  });
+  document.querySelectorAll('.faq-q').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var item = btn.closest('.faq-item');
+      var ans = item.querySelector('.faq-a');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(o){
+        o.classList.remove('open'); o.querySelector('.faq-a').style.maxHeight = null;
+      });
+      if(!isOpen){
+        item.classList.add('open');
+        ans.style.maxHeight = ans.scrollHeight + 'px';
+      }
+    });
+  });
+  document.querySelectorAll('.nav ul a').forEach(function(a){
+    a.addEventListener('click', function(){ document.getElementById('navList').classList.remove('open'); });
+  });
+</script>
+
+</body>
+</html>
