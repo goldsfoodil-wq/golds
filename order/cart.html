@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ההזמנה שלכם | גולד'ס</title>
+  <meta name="description" content="סקירת ההזמנה שלכם לפני המשך לתשלום." />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/footer.css" />
+  <link rel="stylesheet" href="../css/cart.css" />
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="header-logo">גולד<span class="logo-apos">'</span>ס</a>
+      <nav class="header-nav" aria-label="ניווט ראשי">
+        <a href="../index.html">ראשי</a>
+        <a href="../index.html#about">אודות</a>
+        <a href="../index.html#contact">צור קשר</a>
+        <a href="index.html" class="active">הזמנה</a>
+      </nav>
+      <a href="cart.html" class="header-cart" aria-label="עגלת קניות">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        עגלה
+        <span class="cart-badge" aria-live="polite"></span>
+      </a>
+      <button class="hamburger" aria-label="פתח תפריט" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="תפריט נייד">
+    <a href="../index.html">ראשי</a>
+    <a href="../index.html#about">אודות</a>
+    <a href="../index.html#contact">צור קשר</a>
+    <a href="index.html" class="active">הזמנה</a>
+  </nav>
+
+  <main class="header-offset">
+    <div class="cart-page">
+      <div class="wrap">
+
+        <!-- ── Page heading ── -->
+        <div class="cart-page-head">
+          <span class="eyebrow">סיכום</span>
+          <h1 class="cart-page-title">ההזמנה שלכם</h1>
+          <p class="cart-page-count" id="cart-item-count"></p>
+        </div>
+
+        <!-- ── Filled cart ── -->
+        <div id="cart-filled" hidden>
+          <div class="cart-layout">
+
+            <!-- items column -->
+            <div class="cart-items-col">
+              <div class="cart-cols" aria-hidden="true">
+                <span>מנה</span>
+                <span class="cart-col-qty">כמות</span>
+                <span class="cart-col-total">סה"כ</span>
+              </div>
+              <div id="cart-items-list" role="list" aria-label="פריטים בהזמנה"></div>
+            </div>
+
+            <!-- summary column -->
+            <aside class="cart-summary" aria-label="סיכום הזמנה">
+              <p class="cart-summary-title">סיכום הזמנה</p>
+
+              <div class="cart-summary-row">
+                <span class="cart-summary-label">סכום ביניים</span>
+                <span class="cart-summary-value" id="cart-subtotal-val">—</span>
+              </div>
+              <div class="cart-summary-row">
+                <span class="cart-summary-label">משלוח</span>
+                <span class="cart-summary-value">יתואם בהמשך</span>
+              </div>
+
+              <div class="cart-summary-rule"></div>
+
+              <div class="cart-summary-total-row">
+                <span class="cart-summary-total-label">סה"כ לתשלום</span>
+                <span class="cart-summary-total-val" id="cart-total-val">—</span>
+              </div>
+
+              <a href="checkout.html" class="cart-checkout-btn">המשך לתשלום</a>
+              <a href="index.html" class="cart-continue">המשיכו לבחור מנות</a>
+
+              <p class="cart-summary-notice">
+                פרטי משלוח ואיסוף עצמי יתואמו בשלב הבא.
+                ניתן לשנות כמויות בכל שלב לפני אישור ההזמנה.
+              </p>
+            </aside>
+
+          </div>
+        </div>
+
+        <!-- ── Empty state ── -->
+        <div id="cart-empty" hidden>
+          <div class="cart-empty">
+            <div class="cart-empty-rule" aria-hidden="true"></div>
+            <h2 class="cart-empty-title">הסל ריק</h2>
+            <p class="cart-empty-sub">
+              עוד לא בחרתם מנות.<br>
+              חזרו לתפריט ובחרו מה שמתחשק לכם.
+            </p>
+            <a href="index.html" class="cart-empty-btn">חזרו לתפריט</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <div class="footer-logo">גולד<span class="logo-apos">'</span>ס</div>
+      <p class="footer-tagline">קייטרינג כשר לאירועים שלא שוכחים</p>
+    </div>
+    <div class="footer-rule"></div>
+    <div class="footer-contact">
+      <a href="tel:+972000000000" class="footer-link">050-000-0000</a>
+      <a href="mailto:info@golds.co.il" class="footer-link">info@golds.co.il</a>
+    </div>
+    <div class="footer-bottom-line"></div>
+    <div class="footer-legal">
+      <span>© 2024 גולד'ס</span>
+      <span class="footer-sep">·</span>
+      <a href="#">תנאי שימוש</a>
+      <span class="footer-sep">·</span>
+      <a href="#">פרטיות</a>
+    </div>
+  </footer>
+
+  <script src="../js/cart.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      var Cart = window.GoldsCart;
+
+      /* ── Helpers ── */
+
+      function fmt(n) {
+        return n.toLocaleString('he-IL') + ' ₪';
+      }
+
+      function el(id) {
+        return document.getElementById(id);
+      }
+
+      /* ── Update summary numbers without re-rendering rows ── */
+
+      function updateSummary() {
+        var total = Cart.getTotal();
+        var count = Cart.getCount();
+
+        el('cart-item-count').textContent =
+          count === 1 ? 'פריט אחד' : count + ' פריטים';
+        el('cart-subtotal-val').textContent = fmt(total);
+        el('cart-total-val').textContent    = fmt(total);
+      }
+
+      /* ── Update a single row's line total in place ── */
+
+      function updateRowTotal(row, price, qty) {
+        row.querySelector('.cart-item-total').textContent = fmt(price * qty);
+      }
+
+      /* ── Build and wire a single item row ── */
+
+      function buildRow(item) {
+        var row = document.createElement('div');
+        row.className = 'cart-item';
+        row.setAttribute('role', 'listitem');
+        row.dataset.id = item.id;
+
+        row.innerHTML = [
+          '<div class="cart-item-info">',
+            '<p class="cart-item-name">', item.name, '</p>',
+            '<p class="cart-item-meta">',
+              item.price.toLocaleString('he-IL'), ' ₪ / ', item.unit,
+            '</p>',
+            '<button class="cart-item-remove" type="button" aria-label="הסר ', item.name, '">הסר</button>',
+          '</div>',
+          '<div class="cart-qty-wrap">',
+            '<div class="cart-qty" role="group" aria-label="כמות">',
+              '<button class="cart-qty-btn cart-qty-minus" type="button" aria-label="הפחת">−</button>',
+              '<input class="cart-qty-val" type="number" value="', item.qty, '" min="1" aria-label="כמות" />',
+              '<button class="cart-qty-btn cart-qty-plus"  type="button" aria-label="הגדל">+</button>',
+            '</div>',
+          '</div>',
+          '<div class="cart-item-total">', fmt(item.price * item.qty), '</div>'
+        ].join('');
+
+        var input  = row.querySelector('.cart-qty-val');
+        var price  = item.price;
+        var id     = item.id;
+
+        row.querySelector('.cart-qty-minus').addEventListener('click', function () {
+          var v = parseInt(input.value, 10);
+          if (v <= 1) return;
+          var next = v - 1;
+          input.value = next;
+          Cart.updateQty(id, next);
+          updateRowTotal(row, price, next);
+          updateSummary();
+        });
+
+        row.querySelector('.cart-qty-plus').addEventListener('click', function () {
+          var next = parseInt(input.value, 10) + 1;
+          input.value = next;
+          Cart.updateQty(id, next);
+          updateRowTotal(row, price, next);
+          updateSummary();
+        });
+
+        input.addEventListener('change', function () {
+          var v = parseInt(input.value, 10);
+          if (isNaN(v) || v < 1) { v = 1; input.value = 1; }
+          Cart.updateQty(id, v);
+          updateRowTotal(row, price, v);
+          updateSummary();
+        });
+
+        row.querySelector('.cart-item-remove').addEventListener('click', function () {
+          Cart.removeItem(id);
+          render();
+        });
+
+        return row;
+      }
+
+      /* ── Main render ── */
+
+      function render() {
+        var cart  = Cart.getCart();
+        var items = cart.items;
+
+        var filledEl = el('cart-filled');
+        var emptyEl  = el('cart-empty');
+        var listEl   = el('cart-items-list');
+
+        if (!items.length) {
+          filledEl.hidden = true;
+          emptyEl.hidden  = false;
+          el('cart-item-count').textContent = '';
+          return;
+        }
+
+        filledEl.hidden = false;
+        emptyEl.hidden  = true;
+
+        listEl.innerHTML = '';
+        items.forEach(function (item) {
+          listEl.appendChild(buildRow(item));
+        });
+
+        updateSummary();
+      }
+
+      /* ── Hamburger ── */
+
+      var hamburger = document.querySelector('.hamburger');
+      var mobileNav = document.querySelector('.mobile-nav');
+      if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function () {
+          var open = mobileNav.classList.toggle('open');
+          hamburger.classList.toggle('open', open);
+          hamburger.setAttribute('aria-expanded', String(open));
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', render);
+
+    }());
+  </script>
+
+</body>
+</html>

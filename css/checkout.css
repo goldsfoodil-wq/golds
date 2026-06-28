@@ -1,0 +1,548 @@
+/* ============================================================
+   CHECKOUT — Styles for order/checkout.html and order/thank-you.html
+   Requires: base.css loaded first
+============================================================ */
+
+/* ── Page wrapper ── */
+.checkout-page {
+  padding: 3.5rem 0 7rem;
+}
+
+/* ── Page heading ── */
+.checkout-page-head {
+  margin-bottom: 2.75rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.checkout-page-head .eyebrow { margin-bottom: 1rem; }
+
+.checkout-page-title {
+  font-family: var(--f-head);
+  font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.026em;
+  line-height: 1.08;
+  color: var(--text);
+}
+
+/* ── Two-column layout: form (right in RTL) | summary (left in RTL) ── */
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 4rem;
+  align-items: start;
+}
+
+/* ── Form sections ── */
+.checkout-section {
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.checkout-section-last {
+  border-bottom: none;
+  margin-bottom: 2.5rem;
+}
+
+.checkout-section-title {
+  font-family: var(--f-head);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+/* ── Individual field wrapper ── */
+.checkout-field {
+  margin-bottom: 1.25rem;
+}
+.checkout-field:last-child { margin-bottom: 0; }
+
+/* ── Label ── */
+.checkout-label {
+  display: block;
+  font-family: var(--f-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+.checkout-label .req {
+  color: var(--cta);
+  font-weight: 400;
+}
+
+/* ── Input and textarea shared base ── */
+.checkout-input,
+.checkout-textarea {
+  display: block;
+  width: 100%;
+  background: #fff;
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius-sm);
+  font-family: var(--f-body);
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.checkout-input {
+  height: 48px;
+  padding: 0 0.875rem;
+}
+.checkout-textarea {
+  padding: 0.75rem 0.875rem;
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.6;
+}
+.checkout-input::placeholder,
+.checkout-textarea::placeholder {
+  color: var(--muted);
+  font-weight: 300;
+}
+.checkout-input:focus,
+.checkout-textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-dim);
+}
+.checkout-input.invalid {
+  border-color: var(--cta);
+  box-shadow: 0 0 0 3px rgba(182,58,34,0.10);
+}
+.checkout-input[type="date"] { cursor: pointer; }
+
+/* ── Error text ── */
+.checkout-error {
+  font-family: var(--f-body);
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--cta);
+  margin-top: 0.4rem;
+}
+
+/* ── Radio group (pickup / delivery) ── */
+.checkout-radio-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.checkout-radio-option {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.checkout-radio-option:hover {
+  border-color: var(--gold);
+  background: var(--cream);
+}
+
+/* hide native radio visually */
+.checkout-radio-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* custom radio circle */
+.radio-box {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border-2);
+  border-radius: 50%;
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.18s ease;
+}
+.radio-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cta);
+  transform: scale(0);
+  transition: transform 0.18s ease;
+}
+
+/* checked state */
+.checkout-radio-option input[type="radio"]:checked ~ .radio-box {
+  border-color: var(--cta);
+}
+.checkout-radio-option input[type="radio"]:checked ~ .radio-box .radio-dot {
+  transform: scale(1);
+}
+.checkout-radio-option:has(input[type="radio"]:checked) {
+  border-color: var(--cta);
+  background: rgba(182,58,34,0.04);
+}
+.checkout-radio-option input[type="radio"]:focus-visible ~ .radio-box {
+  box-shadow: 0 0 0 3px var(--gold-dim);
+}
+
+.radio-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.radio-text strong {
+  font-family: var(--f-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.2;
+}
+.radio-text span {
+  font-family: var(--f-body);
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--muted);
+}
+
+/* ── Submit button ── */
+.checkout-submit {
+  display: block;
+  width: 100%;
+  background: var(--cta);
+  color: #fff;
+  font-family: var(--f-body);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.01em;
+  box-shadow: 0 6px 24px rgba(182,58,34,0.22);
+  transition: background 0.22s ease, transform 0.18s ease, box-shadow 0.22s ease;
+}
+.checkout-submit:hover {
+  background: var(--cta-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px rgba(182,58,34,0.30);
+}
+.checkout-submit:active { transform: scale(0.98); }
+
+/* ── Order summary panel ── */
+.checkout-summary {
+  position: sticky;
+  top: calc(var(--header-h) + 2rem);
+  background: var(--cream-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.75rem;
+}
+
+.checkout-summary-title {
+  font-family: var(--f-head);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.checkout-summary-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.checkout-summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.checkout-summary-item-name {
+  font-family: var(--f-body);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.checkout-summary-item-qty {
+  font-size: 0.78rem;
+  font-weight: 300;
+  color: var(--muted);
+}
+
+.checkout-summary-item-price {
+  font-family: var(--f-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.checkout-summary-rule {
+  height: 1px;
+  background: var(--border);
+  margin: 1.25rem 0;
+}
+
+.checkout-summary-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.5rem;
+}
+
+.checkout-summary-total-label {
+  font-family: var(--f-head);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.checkout-summary-total-val {
+  font-family: var(--f-head);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  color: var(--text);
+}
+
+.checkout-summary-back {
+  display: block;
+  text-align: center;
+  font-family: var(--f-body);
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--muted);
+  transition: color 0.2s ease;
+  margin-bottom: 1.25rem;
+}
+.checkout-summary-back:hover { color: var(--text); }
+
+.checkout-summary-notice {
+  font-family: var(--f-body);
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+
+/* ── Empty cart state on checkout ── */
+.checkout-empty {
+  max-width: 420px;
+  margin: 5rem auto;
+  text-align: center;
+}
+.checkout-empty-rule {
+  width: 2rem;
+  height: 1px;
+  background: var(--gold);
+  margin: 0 auto 2rem;
+  opacity: 0.5;
+}
+.checkout-empty-title {
+  font-family: var(--f-head);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+.checkout-empty-sub {
+  font-family: var(--f-body);
+  font-size: 0.92rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 2.25rem;
+}
+.checkout-empty-btn {
+  display: inline-block;
+  background: var(--text);
+  color: #fff;
+  font-family: var(--f-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.875rem 2.25rem;
+  border-radius: var(--radius-sm);
+  transition: background 0.22s ease;
+}
+.checkout-empty-btn:hover { background: var(--cta); color: #fff; }
+
+/* ── Thank-you page ── */
+.thankyou-page {
+  padding: 5rem 0 8rem;
+}
+
+.thankyou-inner {
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.thankyou-mark {
+  width: 68px;
+  height: 68px;
+  background: rgba(182,58,34,0.08);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.75rem;
+}
+
+.thankyou-eyebrow { margin-bottom: 0.85rem; }
+
+.thankyou-title {
+  font-family: var(--f-head);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+
+.thankyou-sub {
+  font-family: var(--f-body);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+
+.thankyou-sub-2 {
+  font-family: var(--f-body);
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--muted);
+  margin-bottom: 2.75rem;
+}
+
+/* order summary card on thank-you */
+.thankyou-summary {
+  background: var(--cream-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  text-align: right;
+  margin-bottom: 2.75rem;
+}
+
+.thankyou-summary-title {
+  font-family: var(--f-head);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.thankyou-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.thankyou-detail-row:last-of-type { border-bottom: none; }
+
+.thankyou-detail-label {
+  font-family: var(--f-body);
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--muted);
+}
+
+.thankyou-detail-val {
+  font-family: var(--f-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.thankyou-items-rule {
+  height: 1px;
+  background: var(--border);
+  margin: 1.1rem 0 0.85rem;
+}
+
+.thankyou-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: var(--f-body);
+  font-size: 0.875rem;
+  color: var(--text);
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.thankyou-item:last-of-type { border-bottom: none; }
+
+.thankyou-item-name { font-weight: 400; }
+.thankyou-item-qty  { font-weight: 300; color: var(--muted); margin-right: 0.25rem; }
+.thankyou-item-price { font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+
+.thankyou-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.thankyou-total-label {
+  font-family: var(--f-head);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.thankyou-total-val {
+  font-family: var(--f-head);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.thankyou-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── Responsive ── */
+@media (max-width: 960px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .checkout-summary { position: static; }
+}
+
+@media (max-width: 600px) {
+  .checkout-page             { padding: 2.25rem 0 5rem; }
+  .checkout-radio-group      { grid-template-columns: 1fr; }
+  .thankyou-page             { padding: 3.5rem 0 6rem; }
+  .thankyou-actions          { flex-direction: column; align-items: stretch; }
+  .thankyou-actions .btn-primary,
+  .thankyou-actions .btn-ghost { text-align: center; }
+}

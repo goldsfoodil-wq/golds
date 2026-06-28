@@ -1,0 +1,97 @@
+/* ============================================================
+   FOOTER — Shared premium footer for all order pages
+   Requires: base.css loaded first
+   Mirrors the footer design on the homepage (index.html).
+============================================================ */
+
+.site-footer {
+  background: #0d0503;
+  padding: 5.5rem 2rem 3.5rem;
+  text-align: center;
+}
+
+.footer-brand { margin-bottom: 2.75rem; }
+
+.footer-logo {
+  font-family: var(--f-head);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: -0.022em;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+.footer-logo .logo-apos { color: var(--gold); }
+
+.footer-tagline {
+  font-family: var(--f-body);
+  font-size: 0.78rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.28);
+  letter-spacing: 0.05em;
+  line-height: 1.7;
+}
+
+.footer-rule {
+  width: 2.25rem;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.20;
+  margin: 2.5rem auto;
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 3rem;
+}
+
+.footer-link {
+  font-family: var(--f-body);
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.46);
+  letter-spacing: 0.025em;
+  transition: color 0.22s ease;
+}
+.footer-link:hover { color: var(--gold); }
+
+.footer-bottom-line {
+  width: 100%;
+  max-width: 360px;
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin: 0 auto 1.75rem;
+}
+
+.footer-legal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.9rem;
+  font-family: var(--f-body);
+  font-size: 0.7rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.18);
+  line-height: 1.9;
+}
+
+.footer-legal a {
+  color: rgba(255,255,255,0.26);
+  transition: color 0.22s ease;
+}
+.footer-legal a:hover { color: rgba(255,255,255,0.52); }
+
+.footer-sep {
+  color: rgba(255,255,255,0.10);
+  user-select: none;
+}
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .site-footer { padding: 4.5rem 1.5rem 2.75rem; }
+  .footer-logo { font-size: 1.9rem; }
+}

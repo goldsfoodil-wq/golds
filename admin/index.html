@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>דשבורד | גולד׳ס ניהול</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <span class="topbar-logo">גולד<span>׳</span>ס ניהול</span>
+    <nav class="topbar-nav">
+      <a href="index.html"  class="topbar-link active">דשבורד</a>
+      <a href="orders.html" class="topbar-link">הזמנות</a>
+    </nav>
+    <button class="topbar-logout" id="btn-logout">התנתקות</button>
+  </header>
+
+  <main class="admin-wrap">
+
+    <div class="stat-grid" id="stat-grid">
+      <div class="stat-card"><div class="stat-label">אירועים היום</div><div class="stat-val" id="s-today">—</div></div>
+      <div class="stat-card" id="sc-pending"><div class="stat-label">ממתינות לאישור</div><div class="stat-val" id="s-pending">—</div></div>
+      <div class="stat-card" id="sc-paid"   ><div class="stat-label">שולמו</div><div class="stat-val" id="s-paid">—</div></div>
+      <div class="stat-card" id="sc-ready"  ><div class="stat-label">מוכנות</div><div class="stat-val" id="s-ready">—</div></div>
+    </div>
+
+    <div class="section-card">
+    <div class="section-card">
+  <div class="section-title">מרכז פעולה</div>
+  <div id="action-center" class="empty-state">טוען...</div>
+</div>
+
+<div class="section-card">
+  <div class="section-title">השבוע הקרוב</div>
+  <div id="week-overview" class="overview-list">
+    <div class="empty-state">טוען...</div>
+  </div>
+</div>
+
+<div class="section-card">
+  <div class="section-title">החודש הקרוב</div>
+  <div id="month-overview" class="overview-list">
+    <div class="empty-state">טוען...</div>
+  </div>
+</div>
+
+  </main>
+
+  <script src="admin.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    if (!ADMIN.requireAuth()) { return; }
+
+    document.getElementById('btn-logout').addEventListener('click', ADMIN.logout);
+
+    function startOfDay(date) {
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    }
+
+    function addDays(date, days) {
+      var d = new Date(date);
+      d.setDate(d.getDate() + days);
+      return d;
+    }
+
+    function getOrderDate(order) {
+      return startOfDay(new Date(order.eventDate));
+    }
+
+    function sameDay(a, b) {
+      return a.getFullYear() === b.getFullYear() &&
+        a.getMonth() === b.getMonth() &&
+        a.getDate() === b.getDate();
+    }
+
+    function dayLabel(date, today) {
+      if (sameDay(date, today)) { return 'היום'; }
+      if (sameDay(date, addDays(today, 1))) { return 'מחר'; }
+
+      return date.toLocaleDateString('he-IL', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'numeric'
+      });
+    }
+
+    function renderActionCenter(data, upcoming) {
+      var el = document.getElementById('action-center');
+      var alerts = [];
+
+      if (data.pendingCount > 0) {
+        alerts.push('יש ' + data.pendingCount + ' הזמנות שממתינות לאישור');
+      }
+
+      var today = startOfDay(new Date());
+      var tomorrow = addDays(today, 1);
+      var tomorrowCount = upcoming.filter(function (o) {
+        return sameDay(getOrderDate(o), tomorrow);
+      }).length;
+
+      if (tomorrowCount > 0) {
+        alerts.push('מחר יש ' + tomorrowCount + ' הזמנות מתוכננות');
+      }
+
+      var heavyDay = null;
+      var counts = {};
+
+      upcoming.forEach(function (o) {
+        var key = getOrderDate(o).toISOString().slice(0, 10);
+        counts[key] = (counts[key] || 0) + 1;
+      });
+
+      Object.keys(counts).forEach(function (key) {
+        if (!heavyDay || counts[key] > heavyDay.count) {
+          heavyDay = { date: key, count: counts[key] };
+        }
+      });
+
+      if (heavyDay && heavyDay.count >= 5) {
+        alerts.push('יש יום עמוס במיוחד עם ' + heavyDay.count + ' הזמנות');
+      }
+
+      if (alerts.length === 0) {
+        el.innerHTML = '<div class="empty-state">הכול נראה טוב כרגע</div>';
+        return;
+      }
+
+      el.innerHTML = alerts.map(function (text) {
+        return '<div class="overview-row overview-alert">' +
+          '<span>' + text + '</span>' +
+          '</div>';
+      }).join('');
+    }
+
+    function renderWeekOverview(upcoming) {
+      var el = document.getElementById('week-overview');
+      var today = startOfDay(new Date());
+      var total = 0;
+      var html = '';
+
+      for (var i = 0; i < 7; i++) {
+        var day = addDays(today, i);
+        var count = upcoming.filter(function (o) {
+          return sameDay(getOrderDate(o), day);
+        }).length;
+
+        total += count;
+
+        html += '<div class="overview-row" onclick="window.location.href=\'orders.html?date=' + day.toISOString().slice(0, 10) + '\'">' +
+          '<span>' + dayLabel(day, today) + '</span>' +
+          '<strong>' + count + ' הזמנות</strong>' +
+          '</div>';
+      }
+
+      html += '<div class="overview-total">' +
+        '<span>סה״כ 7 ימים</span>' +
+        '<strong>' + total + ' הזמנות</strong>' +
+        '</div>';
+
+      el.innerHTML = html;
+    }
+
+    function renderMonthOverview(upcoming) {
+      var el = document.getElementById('month-overview');
+      var today = startOfDay(new Date());
+      var total = 0;
+      var html = '';
+
+      for (var i = 0; i < 4; i++) {
+        var from = addDays(today, i * 7);
+        var to = addDays(today, (i + 1) * 7);
+
+        var count = upcoming.filter(function (o) {
+          var d = getOrderDate(o);
+          return d >= from && d < to;
+        }).length;
+
+        total += count;
+
+        var label = i === 0 ? 'השבוע הזה' :
+          i === 1 ? 'שבוע הבא' :
+          i === 2 ? 'עוד שבועיים' :
+          'שבוע רביעי';
+
+        html += '<div class="overview-row">' +
+          '<span>' + label + '</span>' +
+          '<strong>' + count + ' הזמנות</strong>' +
+          '</div>';
+      }
+
+      html += '<div class="overview-total">' +
+        '<span>סה״כ חודש קרוב</span>' +
+        '<strong>' + total + ' הזמנות</strong>' +
+        '</div>';
+
+      el.innerHTML = html;
+    }
+
+    function load() {
+      ADMIN.apiFetch('/api/admin/stats')
+        .then(function (r) {
+          if (!r.ok) { throw new Error('stats failed'); }
+
+          var d = r.data;
+          var upcoming = d.upcoming || [];
+
+          document.getElementById('s-today').textContent = d.todayCount;
+          document.getElementById('s-pending').textContent = d.pendingCount;
+          document.getElementById('s-paid').textContent = d.paidCount;
+          document.getElementById('s-ready').textContent = d.readyCount;
+
+          if (d.pendingCount > 0) { document.getElementById('sc-pending').classList.add('warn'); }
+          if (d.paidCount > 0) { document.getElementById('sc-paid').classList.add('info'); }
+          if (d.readyCount > 0) { document.getElementById('sc-ready').classList.add('good'); }
+
+          renderActionCenter(d, upcoming);
+          renderWeekOverview(upcoming);
+          renderMonthOverview(upcoming);
+        })
+        .catch(function () {
+          document.getElementById('action-center').innerHTML =
+            '<div class="empty-state">שגיאה בטעינת הנתונים</div>';
+          document.getElementById('week-overview').innerHTML =
+            '<div class="empty-state">שגיאה בטעינת הנתונים</div>';
+          document.getElementById('month-overview').innerHTML =
+            '<div class="empty-state">שגיאה בטעינת הנתונים</div>';
+        });
+    }
+
+    load();
+
+  }());
+</script>
+
+</body>
+</html>

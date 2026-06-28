@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>פרטי הזמנה | גולד׳ס ניהול</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <span class="topbar-logo">גולד<span>׳</span>ס ניהול</span>
+    <nav class="topbar-nav">
+      <a href="index.html"  class="topbar-link">דשבורד</a>
+      <a href="orders.html" class="topbar-link active">הזמנות</a>
+    </nav>
+    <button class="topbar-logout" id="btn-logout">התנתקות</button>
+  </header>
+
+  <main class="admin-wrap" id="main-content">
+    <p class="empty-state">טוען...</p>
+  </main>
+
+  <script src="admin.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      if (!ADMIN.requireAuth()) { return; }
+
+      document.getElementById('btn-logout').addEventListener('click', ADMIN.logout);
+
+      var orderId = ADMIN.getParam('id');
+      if (!orderId) {
+        document.getElementById('main-content').innerHTML =
+          '<a class="back-link" href="orders.html">← חזרה להזמנות</a>' +
+          '<p class="empty-state">מזהה הזמנה חסר</p>';
+        return;
+      }
+
+      var orderData = null;
+
+      /* ── Owner WhatsApp button ── */
+      var WA_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.122 1.527 5.855L.057 23.457a.75.75 0 00.914.99l5.65-1.438A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.725 9.725 0 01-5.022-1.394l-.36-.214-3.726.949.966-3.628-.235-.373A9.693 9.693 0 012.25 12c0-5.376 4.374-9.75 9.75-9.75S21.75 6.624 21.75 12 17.376 21.75 12 21.75z"/></svg>';
+
+      function loadOwnerWhatsApp(orderRef) {
+        ADMIN.apiFetch('/api/admin/orders/' + orderRef + '/notification-preview')
+          .then(function (r) {
+            var wrap = document.getElementById('wa-owner-wrap');
+            if (!wrap || !r.ok) { return; }
+            var d = r.data;
+            if (d.whatsappConfigured && d.whatsappUrl) {
+              wrap.innerHTML =
+                '<a class="btn-wa-notify" href="' + d.whatsappUrl + '" target="_blank" rel="noopener">' +
+                WA_SVG + 'שלח ב־WhatsApp' +
+                '</a>';
+            } else {
+              wrap.innerHTML =
+                '<span class="btn-wa-notify btn-wa-notify-off">' +
+                WA_SVG + 'WhatsApp לא מוגדר' +
+                '</span>';
+            }
+          })
+          .catch(function () { /* silently skip */ });
+      }
+
+      /* ── Load order ── */
+      function load() {
+        ADMIN.apiFetch('/api/admin/orders/' + orderId)
+          .then(function (r) {
+            if (!r.ok) { throw new Error('not found'); }
+            orderData = r.data;
+            render(r.data);
+            loadOwnerWhatsApp(r.data.orderRef);
+          })
+          .catch(function () {
+            document.getElementById('main-content').innerHTML =
+              '<a class="back-link" href="orders.html">← חזרה להזמנות</a>' +
+              '<p class="empty-state">לא הצלחנו לטעון את ההזמנה</p>';
+          });
+      }
+
+      /* ── Render ── */
+      function render(o) {
+        var c = o.customer || {};
+
+        /* ── Customer details ── */
+        var custHTML =
+          '<div class="detail-grid">' +
+            '<div class="detail-row">' +
+              '<span class="detail-label">שם</span>' +
+              '<span class="detail-val">' + esc(c.name) + '</span>' +
+            '</div>' +
+            '<div class="detail-row">' +
+              '<span class="detail-label">טלפון</span>' +
+              '<span class="detail-val">' +
+                '<a href="tel:' + c.phone + '">' + c.phone + '</a>' +
+                '&nbsp;' + ADMIN.waBtn(c.phone) +
+              '</span>' +
+            '</div>' +
+            '<div class="detail-row">' +
+              '<span class="detail-label">תאריך האירוע</span>' +
+              '<span class="detail-val">' + ADMIN.formatDate(c.eventDate) + '</span>' +
+            '</div>' +
+            '<div class="detail-row">' +
+              '<span class="detail-label">אופן קבלה</span>' +
+              '<span class="detail-val">' + (c.deliveryType === 'delivery' ? 'משלוח' : 'איסוף עצמי') + '</span>' +
+            '</div>' +
+            (c.address ? (
+              '<div class="detail-row" style="grid-column:1/-1">' +
+                '<span class="detail-label">כתובת</span>' +
+                '<span class="detail-val">' + esc(c.address) + '</span>' +
+              '</div>'
+            ) : '') +
+          '</div>';
+
+        /* ── Notes ── */
+        var notesHTML = c.notes
+          ? '<div class="section-card">' +
+              '<div class="section-title">הערות</div>' +
+              '<p style="font-size:0.925rem;line-height:1.6">' + esc(c.notes) + '</p>' +
+            '</div>'
+          : '';
+
+        /* ── Items table ── */
+        var itemRows = (o.items || []).map(function (item) {
+          return '<tr>' +
+            '<td>' + esc(item.name) + (item.unit ? ' <span style="font-size:0.8rem;color:var(--muted)">(' + esc(item.unit) + ')</span>' : '') + '</td>' +
+            '<td style="text-align:center">' + item.qty + '</td>' +
+            '<td style="text-align:left;direction:ltr">' + ADMIN.fmtMoney(item.priceShekel) + '</td>' +
+            '<td style="text-align:left;direction:ltr;font-weight:600">' + ADMIN.fmtMoney(item.lineTotalShekel) + '</td>' +
+            '</tr>';
+        }).join('');
+
+        var itemsHTML =
+          '<table class="items-table">' +
+            '<thead><tr>' +
+              '<th>מנה</th><th style="text-align:center">כמות</th>' +
+              '<th style="text-align:left">מחיר יחידה</th>' +
+              '<th style="text-align:left">סה"כ</th>' +
+            '</tr></thead>' +
+            '<tbody>' + itemRows + '</tbody>' +
+          '</table>' +
+          '<div class="items-total">' +
+            '<span>סה"כ להזמנה</span>' +
+            '<span>' + ADMIN.fmtMoney(o.totalShekel) + '</span>' +
+          '</div>';
+
+        /* ── Status pills ── */
+        var pillsHTML = Object.keys(ADMIN.STATUS_HE).map(function (s) {
+          var isActive = s === o.status;
+          var cls = 'pill' + (isActive ? ' pill-active' + (s === 'cancelled' ? ' pill-cancelled' : '') : '');
+          return '<button class="' + cls + '" data-status="' + s + '">' + ADMIN.STATUS_HE[s] + '</button>';
+        }).join('');
+
+        /* ── Full page ── */
+        document.getElementById('main-content').innerHTML =
+          '<a class="back-link" href="orders.html">← חזרה להזמנות</a>' +
+
+          '<div class="order-header">' +
+            '<span class="order-ref-title">' + o.orderRef + '</span>' +
+            '<span class="order-date-chip">' + ADMIN.formatDate(c.eventDate) + '</span>' +
+            ADMIN.statusBadge(o.status) +
+            ADMIN.paymentBadge(o.paymentStatus) +
+          '</div>' +
+
+          /* customer card */
+          '<div class="section-card">' +
+            '<div class="section-title">פרטי לקוח</div>' +
+            custHTML +
+          '</div>' +
+
+          /* items card */
+          '<div class="section-card">' +
+            '<div class="section-title">פריטים שהוזמנו</div>' +
+            itemsHTML +
+          '</div>' +
+
+          /* notes */
+          notesHTML +
+
+          /* payment + created */
+          '<div class="section-card">' +
+            '<div class="section-title">תשלום ומידע</div>' +
+            '<div class="detail-grid">' +
+              '<div class="detail-row"><span class="detail-label">סטטוס תשלום</span>' +
+                '<span class="detail-val">' + ADMIN.paymentBadge(o.paymentStatus) + '</span></div>' +
+              '<div class="detail-row"><span class="detail-label">נוצרה</span>' +
+                '<span class="detail-val">' + (o.createdAt || '—') + '</span></div>' +
+            '</div>' +
+          '</div>' +
+
+          /* status change */
+          '<div class="section-card">' +
+            '<div class="section-title">עדכון סטטוס</div>' +
+            '<div class="status-pills" id="status-pills">' + pillsHTML + '</div>' +
+            '<div id="confirm-bar" hidden></div>' +
+          '</div>' +
+
+          /* copy + whatsapp buttons */
+          '<div style="margin-top:0.75rem;display:flex;gap:0.5rem;flex-wrap:wrap">' +
+            '<button class="btn-copy" id="btn-copy">' +
+              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>' +
+              'העתק הזמנה' +
+            '</button>' +
+            '<span id="wa-owner-wrap"></span>' +
+          '</div>';
+
+        /* wire status pills */
+        document.getElementById('status-pills').addEventListener('click', function (e) {
+          var pill = e.target.closest('.pill');
+          if (!pill) { return; }
+          var newStatus = pill.dataset.status;
+          if (newStatus === o.status) { return; }
+
+          if (newStatus === 'cancelled') {
+            showConfirm(newStatus, o);
+          } else {
+            patchStatus(newStatus, o);
+          }
+        });
+
+        /* wire copy button */
+        document.getElementById('btn-copy').addEventListener('click', function () {
+          copyOrder(o);
+        });
+      }
+
+      /* ── Confirm bar (cancel only) ── */
+      function showConfirm(newStatus, o) {
+        var bar = document.getElementById('confirm-bar');
+        bar.hidden = false;
+        bar.innerHTML =
+          '<div class="confirm-bar">' +
+            '<span class="confirm-bar-msg">האם לבטל את ההזמנה? פעולה זו לא ניתנת לביטול.</span>' +
+            '<button class="btn-confirm-yes" id="conf-yes">כן, בטל</button>' +
+            '<button class="btn-confirm-no"  id="conf-no">ביטול</button>' +
+          '</div>';
+        document.getElementById('conf-yes').addEventListener('click', function () {
+          bar.hidden = true;
+          patchStatus(newStatus, o);
+        });
+        document.getElementById('conf-no').addEventListener('click', function () {
+          bar.hidden = true;
+        });
+      }
+
+      /* ── Patch status ── */
+      function patchStatus(newStatus, o) {
+        ADMIN.apiFetch('/api/admin/orders/' + o.id + '/status', {
+          method: 'PATCH',
+          body:   JSON.stringify({ status: newStatus })
+        })
+        .then(function (r) {
+          if (!r.ok) { throw new Error('patch failed'); }
+          orderData.status = newStatus;
+          /* update pills */
+          document.querySelectorAll('.pill').forEach(function (p) {
+            var isActive = p.dataset.status === newStatus;
+            p.classList.toggle('pill-active', isActive);
+            p.classList.toggle('pill-cancelled', isActive && newStatus === 'cancelled');
+          });
+          /* update header badge */
+          var headerBadge = document.querySelector('.order-header .badge');
+          if (headerBadge) {
+            headerBadge.className = 'badge badge-' + newStatus;
+            headerBadge.textContent = ADMIN.statusLabel(newStatus);
+          }
+        })
+        .catch(function () {
+          alert('לא הצלחנו לעדכן את הסטטוס');
+        });
+      }
+
+      /* ── Copy order to clipboard ── */
+      function copyOrder(o) {
+        var c   = o.customer || {};
+        var btn = document.getElementById('btn-copy');
+
+        var lines = [
+          'הזמנה מס׳ ' + o.orderRef,
+          'שם: ' + c.name + ' | טלפון: ' + c.phone,
+          'תאריך: ' + ADMIN.formatDate(c.eventDate) + ' | ' + (c.deliveryType === 'delivery' ? 'משלוח' : 'איסוף עצמי'),
+        ];
+        if (c.address) { lines.push('כתובת: ' + c.address); }
+        if (c.notes)   { lines.push('הערות: ' + c.notes);   }
+        lines.push('');
+        lines.push('מנות:');
+        (o.items || []).forEach(function (item) {
+          lines.push(item.name + ' × ' + item.qty + ' — ' + ADMIN.fmtMoney(item.lineTotalShekel));
+        });
+        lines.push('');
+        lines.push('סה"כ: ' + ADMIN.fmtMoney(o.totalShekel));
+        lines.push('סטטוס: ' + ADMIN.statusLabel(o.status));
+
+        var text = lines.join('\n');
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            btn.textContent = '✓ הועתק';
+            btn.classList.add('copied');
+            setTimeout(function () {
+              btn.innerHTML =
+                '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> העתק הזמנה';
+              btn.classList.remove('copied');
+            }, 2000);
+          }).catch(function () {
+            fallbackCopy(text);
+          });
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity  = '0';
+        document.body.appendChild(ta);
+        ta.focus(); ta.select();
+        try { document.execCommand('copy'); } catch (_) {}
+        document.body.removeChild(ta);
+      }
+
+      function esc(s) {
+        return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      }
+
+      load();
+
+    }());
+  </script>
+
+</body>
+</html>

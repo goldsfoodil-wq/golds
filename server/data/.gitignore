@@ -1,0 +1,4 @@
+# Ignore the SQLite database file — it is runtime data, not source
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm

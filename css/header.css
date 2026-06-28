@@ -1,0 +1,160 @@
+/* ============================================================
+   HEADER — Shared fixed header for all order pages
+   Requires: base.css loaded first (uses --f-head, --gold, etc.)
+   Requires: cart.js loaded (updates .cart-badge automatically)
+============================================================ */
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 900;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  background: rgba(250,248,244,0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 28px rgba(0,0,0,0.06);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ── Logo ── */
+.header-logo {
+  font-family: var(--f-head);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  transition: opacity 0.2s ease;
+}
+.header-logo:hover { opacity: 0.7; }
+.header-logo .logo-apos { color: var(--gold); }
+
+/* ── Desktop nav ── */
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.header-nav a {
+  font-family: var(--f-body);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--muted);
+  transition: color 0.22s ease;
+}
+.header-nav a:hover  { color: var(--text); }
+.header-nav a.active { color: var(--text); font-weight: 500; }
+
+/* ── Cart button ── */
+.header-cart {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--f-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.22s ease, color 0.22s ease;
+}
+.header-cart:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* item count badge — shown only when cart has items */
+.cart-badge {
+  display: none;
+  position: absolute;
+  top: -7px;
+  left: -7px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: var(--cta);
+  color: #fff;
+  font-family: var(--f-body);
+  font-size: 0.64rem;
+  font-weight: 600;
+  border-radius: 9px;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.cart-badge.visible { display: flex; }
+
+/* ── Hamburger — mobile only ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.28s ease, opacity 0.28s ease;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Mobile nav drawer ── */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: var(--header-h);
+  inset-inline: 0;
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+  padding: 1.25rem;
+  z-index: 899;
+  flex-direction: column;
+  gap: 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+}
+.mobile-nav.open { display: flex; }
+
+.mobile-nav a {
+  font-family: var(--f-body);
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--text);
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.22s ease;
+}
+.mobile-nav a:last-child { border-bottom: none; }
+.mobile-nav a:hover      { color: var(--gold); }
+.mobile-nav a.active     { font-weight: 500; }
+
+/* ── Responsive ── */
+@media (max-width: 960px) {
+  .header-nav { display: none; }
+  .hamburger  { display: flex; }
+}
+
+@media (max-width: 600px) {
+  .header-inner { padding: 0 1.25rem; }
+}

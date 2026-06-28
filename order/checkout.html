@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>פרטי ההזמנה | גולד'ס</title>
+  <meta name="description" content="השלמת פרטי ההזמנה — גולד'ס קייטרינג כשר." />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/footer.css" />
+  <link rel="stylesheet" href="../css/checkout.css" />
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="header-logo">גולד<span class="logo-apos">'</span>ס</a>
+      <nav class="header-nav" aria-label="ניווט ראשי">
+        <a href="../index.html">ראשי</a>
+        <a href="../index.html#about">אודות</a>
+        <a href="../index.html#contact">צור קשר</a>
+        <a href="index.html" class="active">הזמנה</a>
+      </nav>
+      <a href="cart.html" class="header-cart" aria-label="עגלת קניות">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        עגלה
+        <span class="cart-badge" aria-live="polite"></span>
+      </a>
+      <button class="hamburger" aria-label="פתח תפריט" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="תפריט נייד">
+    <a href="../index.html">ראשי</a>
+    <a href="../index.html#about">אודות</a>
+    <a href="../index.html#contact">צור קשר</a>
+    <a href="index.html" class="active">הזמנה</a>
+  </nav>
+
+  <main class="header-offset">
+    <div class="checkout-page">
+      <div class="wrap">
+
+        <!-- ── Page heading ── -->
+        <div class="checkout-page-head">
+          <span class="eyebrow">פרטי הזמנה</span>
+          <h1 class="checkout-page-title">השלמת ההזמנה</h1>
+        </div>
+
+        <!-- ── Empty cart state ── -->
+        <div id="checkout-empty" hidden>
+          <div class="checkout-empty">
+            <div class="checkout-empty-rule" aria-hidden="true"></div>
+            <h2 class="checkout-empty-title">הסל ריק</h2>
+            <p class="checkout-empty-sub">
+              לא ניתן להמשיך לתשלום ללא מנות בסל.<br>
+              חזרו לתפריט ובחרו את ההזמנה שלכם.
+            </p>
+            <a href="index.html" class="checkout-empty-btn">חזרו לתפריט</a>
+          </div>
+        </div>
+
+        <!-- ── Main layout: form (right in RTL) | summary (left in RTL) ── -->
+        <div id="checkout-filled" class="checkout-layout" hidden>
+
+          <!-- ── Form column ── -->
+          <div class="checkout-form-col">
+            <form id="checkout-form" class="checkout-form" novalidate>
+
+              <!-- section 1: contact -->
+              <div class="checkout-section">
+                <h2 class="checkout-section-title">פרטי יצירת קשר</h2>
+
+                <div class="checkout-field">
+                  <label class="checkout-label" for="field-name">
+                    שם מלא <span class="req">*</span>
+                  </label>
+                  <input class="checkout-input" type="text" id="field-name" name="name"
+                         autocomplete="name" placeholder="ישראל ישראלי" />
+                  <p class="checkout-error" id="err-name" role="alert" hidden>
+                    אנא הזינו שם מלא
+                  </p>
+                </div>
+
+                <div class="checkout-field">
+                  <label class="checkout-label" for="field-phone">
+                    טלפון <span class="req">*</span>
+                  </label>
+                  <input class="checkout-input" type="tel" id="field-phone" name="phone"
+                         autocomplete="tel" placeholder="050-000-0000" dir="ltr" />
+                  <p class="checkout-error" id="err-phone" role="alert" hidden>
+                    אנא הזינו מספר טלפון תקין
+                  </p>
+                </div>
+              </div>
+
+              <!-- section 2: event details -->
+              <div class="checkout-section">
+                <h2 class="checkout-section-title">פרטי האירוע</h2>
+
+                <div class="checkout-field">
+                  <label class="checkout-label" for="field-date">
+                    תאריך האירוע <span class="req">*</span>
+                  </label>
+                  <input class="checkout-input" type="date" id="field-date" name="eventDate"
+                         dir="ltr" />
+                  <p class="checkout-error" id="err-date" role="alert" hidden>
+                    אנא בחרו תאריך עתידי
+                  </p>
+                </div>
+
+                <div class="checkout-field">
+                  <span class="checkout-label">
+                    אופן קבלה <span class="req">*</span>
+                  </span>
+                  <div class="checkout-radio-group" role="group" aria-label="אופן קבלה">
+                    <label class="checkout-radio-option">
+                      <input type="radio" name="delivery" value="pickup" checked />
+                      <span class="radio-box"><span class="radio-dot"></span></span>
+                      <span class="radio-text">
+                        <strong>איסוף עצמי</strong>
+                        <span>מגיעים לאסוף מאיתנו</span>
+                      </span>
+                    </label>
+                    <label class="checkout-radio-option">
+                      <input type="radio" name="delivery" value="delivery" />
+                      <span class="radio-box"><span class="radio-dot"></span></span>
+                      <span class="radio-text">
+                        <strong>משלוח</strong>
+                        <span>נביא אליכם</span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- address — toggled by JS when delivery is selected -->
+                <div class="checkout-field" id="address-row" hidden>
+                  <label class="checkout-label" for="field-address">
+                    כתובת משלוח <span class="req">*</span>
+                  </label>
+                  <input class="checkout-input" type="text" id="field-address" name="address"
+                         autocomplete="street-address" placeholder="רחוב, מספר בית, עיר" />
+                  <p class="checkout-error" id="err-address" role="alert" hidden>
+                    אנא הזינו כתובת למשלוח
+                  </p>
+                </div>
+              </div>
+
+              <!-- section 3: notes -->
+              <div class="checkout-section checkout-section-last">
+                <h2 class="checkout-section-title">הערות</h2>
+
+                <div class="checkout-field">
+                  <label class="checkout-label" for="field-notes">הערות להזמנה</label>
+                  <textarea class="checkout-textarea" id="field-notes" name="notes"
+                            rows="4"
+                            placeholder="בקשות מיוחדות, אלרגיות, הוראות הגעה..."></textarea>
+                </div>
+              </div>
+
+              <p class="checkout-error" id="err-submit" role="alert" hidden></p>
+              <button class="checkout-submit" type="submit">אשרו את ההזמנה</button>
+
+            </form>
+          </div>
+          <!-- end form column -->
+
+          <!-- ── Summary panel ── -->
+          <aside class="checkout-summary" aria-label="סיכום הזמנה">
+            <p class="checkout-summary-title">סיכום ההזמנה</p>
+
+            <div id="checkout-items" class="checkout-summary-items"></div>
+
+            <div class="checkout-summary-rule"></div>
+
+            <div class="checkout-summary-total-row">
+              <span class="checkout-summary-total-label">סה"כ</span>
+              <span class="checkout-summary-total-val" id="checkout-total-val">—</span>
+            </div>
+
+            <a href="cart.html" class="checkout-summary-back">עריכת הסל</a>
+
+            <p class="checkout-summary-notice">
+              מחיר משלוח סופי יתואם עמכם לאחר קבלת ההזמנה.
+            </p>
+          </aside>
+
+        </div>
+        <!-- end checkout-layout -->
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <div class="footer-logo">גולד<span class="logo-apos">'</span>ס</div>
+      <p class="footer-tagline">קייטרינג כשר לאירועים שלא שוכחים</p>
+    </div>
+    <div class="footer-rule"></div>
+    <div class="footer-contact">
+      <a href="tel:+972000000000" class="footer-link">050-000-0000</a>
+      <a href="mailto:info@golds.co.il" class="footer-link">info@golds.co.il</a>
+    </div>
+    <div class="footer-bottom-line"></div>
+    <div class="footer-legal">
+      <span>© 2024 גולד'ס</span>
+      <span class="footer-sep">·</span>
+      <a href="#">תנאי שימוש</a>
+      <span class="footer-sep">·</span>
+      <a href="#">פרטיות</a>
+    </div>
+  </footer>
+
+  <script src="../js/cart.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      var Cart        = window.GoldsCart;
+      var API_BASE    = 'http://localhost:3001';
+      var SESSION_KEY = 'golds_order_ref';
+
+      function fmt(n) {
+        return n.toLocaleString('he-IL') + ' ₪';
+      }
+
+      /* ── Render order summary panel ── */
+      function renderSummary(items) {
+        var list     = document.getElementById('checkout-items');
+        var totalEl  = document.getElementById('checkout-total-val');
+
+        list.innerHTML = '';
+        items.forEach(function (item) {
+          var row = document.createElement('div');
+          row.className = 'checkout-summary-item';
+          row.innerHTML =
+            '<span class="checkout-summary-item-name">' +
+              item.name +
+              '<span class="checkout-summary-item-qty"> × ' + item.qty + '</span>' +
+            '</span>' +
+            '<span class="checkout-summary-item-price">' + fmt(item.price * item.qty) + '</span>';
+          list.appendChild(row);
+        });
+
+        totalEl.textContent = fmt(Cart.getTotal());
+      }
+
+      /* ── Show / hide address field based on delivery selection ── */
+      function wireDeliveryToggle() {
+        var radios     = document.querySelectorAll('input[name="delivery"]');
+        var addressRow = document.getElementById('address-row');
+        var addressInput = document.getElementById('field-address');
+
+        for (var i = 0; i < radios.length; i++) {
+          radios[i].addEventListener('change', function () {
+            var isDelivery = this.value === 'delivery';
+            addressRow.hidden = !isDelivery;
+            addressInput.required = isDelivery;
+          });
+        }
+      }
+
+      /* ── Clear an individual field error as the user corrects it ── */
+      function wireClearErrors() {
+        var inputs = document.querySelectorAll('.checkout-input, .checkout-textarea');
+        for (var i = 0; i < inputs.length; i++) {
+          inputs[i].addEventListener('input', function () {
+            this.classList.remove('invalid');
+            var errId = this.id.replace('field-', 'err-');
+            var errEl = document.getElementById(errId);
+            if (errEl) errEl.hidden = true;
+          });
+        }
+      }
+
+      /* ── Validation helpers ── */
+      function setFieldError(inputId, errId, hasError) {
+        var input = document.getElementById(inputId);
+        var err   = document.getElementById(errId);
+        if (input) input.classList.toggle('invalid', hasError);
+        if (err)   err.hidden = !hasError;
+        if (hasError && input) input.setAttribute('aria-invalid', 'true');
+        else if (input)        input.removeAttribute('aria-invalid');
+      }
+
+      function validatePhone(val) {
+        var digits = val.replace(/\D/g, '');
+        if (digits.slice(0, 3) === '972') digits = digits.slice(3);
+        return digits.length >= 9 && digits.length <= 10;
+      }
+
+      function isFutureOrToday(val) {
+        if (!val) return false;
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return new Date(val) >= today;
+      }
+
+      /* ── Form submission ── */
+      function wireForm() {
+        var form = document.getElementById('checkout-form');
+
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          var name      = document.getElementById('field-name').value.trim();
+          var phone     = document.getElementById('field-phone').value.trim();
+          var date      = document.getElementById('field-date').value;
+          var delivery  = form.querySelector('input[name="delivery"]:checked').value;
+          var address   = document.getElementById('field-address').value.trim();
+          var notes     = document.getElementById('field-notes').value.trim();
+
+          var nameErr    = !name;
+          var phoneErr   = !validatePhone(phone);
+          var dateErr    = !isFutureOrToday(date);
+          var addressErr = delivery === 'delivery' && !address;
+
+          setFieldError('field-name',    'err-name',    nameErr);
+          setFieldError('field-phone',   'err-phone',   phoneErr);
+          setFieldError('field-date',    'err-date',    dateErr);
+          setFieldError('field-address', 'err-address', addressErr);
+
+          if (nameErr || phoneErr || dateErr || addressErr) {
+            var first = form.querySelector('.invalid');
+            if (first) first.focus();
+            return;
+          }
+
+          /* build payload — ids + qtys only, server recalculates prices */
+          var cart    = Cart.getCart();
+          var payload = {
+            name:         name,
+            phone:        phone,
+            eventDate:    date,
+            deliveryType: delivery,
+            address:      delivery === 'delivery' ? address : '',
+            notes:        notes,
+            items:        cart.items.map(function (item) {
+              return { id: item.id, qty: item.qty };
+            })
+          };
+
+          var submitBtn = form.querySelector('.checkout-submit');
+          var errSubmit = document.getElementById('err-submit');
+          submitBtn.disabled    = true;
+          submitBtn.textContent = 'שולחים...';
+          errSubmit.hidden      = true;
+
+          fetch(API_BASE + '/api/orders', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(payload)
+          })
+          .then(function (res) {
+            return res.json().then(function (data) {
+              return { ok: res.ok, data: data };
+            });
+          })
+          .then(function (result) {
+            if (!result.ok) {
+              throw new Error(result.data.error || 'שגיאת שרת');
+            }
+            try { sessionStorage.setItem(SESSION_KEY, result.data.orderRef); } catch (_) {}
+            Cart.clearCart();
+            window.location.replace('thank-you.html');
+          })
+          .catch(function () {
+            submitBtn.disabled    = false;
+            submitBtn.textContent = 'אשרו את ההזמנה';
+            errSubmit.hidden      = false;
+            errSubmit.textContent = 'לא הצלחנו לשלוח את ההזמנה. בדקו את החיבור לאינטרנט ונסו שוב.';
+          });
+        });
+      }
+
+      /* ── Init ── */
+      document.addEventListener('DOMContentLoaded', function () {
+        var cart = Cart.getCart();
+
+        if (!cart.items.length) {
+          document.getElementById('checkout-empty').hidden = false;
+          return;
+        }
+
+        document.getElementById('checkout-filled').hidden = false;
+        renderSummary(cart.items);
+        wireDeliveryToggle();
+        wireClearErrors();
+        wireForm();
+
+        /* set min date to today */
+        var dateInput = document.getElementById('field-date');
+        if (dateInput) {
+          dateInput.min = new Date().toISOString().split('T')[0];
+        }
+      });
+
+      /* ── Hamburger ── */
+      var hamburger = document.querySelector('.hamburger');
+      var mobileNav = document.querySelector('.mobile-nav');
+      if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function () {
+          var open = mobileNav.classList.toggle('open');
+          hamburger.classList.toggle('open', open);
+          hamburger.setAttribute('aria-expanded', String(open));
+        });
+      }
+
+    }());
+  </script>
+
+</body>
+</html>

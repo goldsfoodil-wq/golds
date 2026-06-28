@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>כניסה | גולד׳ס ניהול</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <div class="login-page">
+    <div class="login-card">
+
+      <div class="login-logo">גולד<span>׳</span>ס</div>
+      <p class="login-sub">ממשק ניהול</p>
+
+      <form id="login-form" novalidate>
+
+        <div class="login-field">
+          <label class="login-label" for="f-email">אימייל</label>
+          <input class="login-input" type="email" id="f-email" name="email"
+                 autocomplete="email" placeholder="admin@golds.co.il" dir="ltr" />
+        </div>
+
+        <div class="login-field">
+          <label class="login-label" for="f-password">סיסמה</label>
+          <input class="login-input" type="password" id="f-password" name="password"
+                 autocomplete="current-password" />
+        </div>
+
+        <button class="login-btn" type="submit" id="login-btn">כניסה</button>
+        <p class="login-err" id="login-err" aria-live="polite"></p>
+
+      </form>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var API_BASE  = 'http://localhost:3001';
+      var TOKEN_KEY = 'golds_admin_token';
+
+      /* redirect if already logged in */
+      try {
+        if (localStorage.getItem(TOKEN_KEY)) { window.location.href = 'index.html'; }
+      } catch (_) {}
+
+      var form    = document.getElementById('login-form');
+      var btnEl   = document.getElementById('login-btn');
+      var errEl   = document.getElementById('login-err');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var email    = document.getElementById('f-email').value.trim();
+        var password = document.getElementById('f-password').value;
+
+        if (!email || !password) {
+          errEl.textContent = 'אנא הזן אימייל וסיסמה';
+          return;
+        }
+
+        btnEl.disabled    = true;
+        btnEl.textContent = 'מתחבר...';
+        errEl.textContent = '';
+
+        fetch(API_BASE + '/api/admin/login', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ email: email, password: password })
+        })
+        .then(function (res) {
+          return res.json().then(function (data) { return { ok: res.ok, data: data }; });
+        })
+        .then(function (result) {
+          if (!result.ok) {
+            errEl.textContent = result.data.error || 'שגיאת כניסה';
+            btnEl.disabled    = false;
+            btnEl.textContent = 'כניסה';
+            return;
+          }
+          try { localStorage.setItem(TOKEN_KEY, result.data.token); } catch (_) {}
+          window.location.href = 'index.html';
+        })
+        .catch(function () {
+          errEl.textContent = 'לא ניתן להתחבר לשרת. בדק שהשרת פועל.';
+          btnEl.disabled    = false;
+          btnEl.textContent = 'כניסה';
+        });
+      });
+
+    }());
+  </script>
+
+</body>
+</html>

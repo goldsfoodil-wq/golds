@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>תודה על ההזמנה | גולד'ס</title>
+  <meta name="description" content="ההזמנה שלכם התקבלה. תודה רבה — גולד'ס." />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/footer.css" />
+  <link rel="stylesheet" href="../css/checkout.css" />
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="header-logo">גולד<span class="logo-apos">'</span>ס</a>
+      <nav class="header-nav" aria-label="ניווט ראשי">
+        <a href="../index.html">ראשי</a>
+        <a href="../index.html#about">אודות</a>
+        <a href="../index.html#contact">צור קשר</a>
+        <a href="index.html">הזמנה</a>
+      </nav>
+      <a href="cart.html" class="header-cart" aria-label="עגלת קניות">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        עגלה
+        <span class="cart-badge" aria-live="polite"></span>
+      </a>
+      <button class="hamburger" aria-label="פתח תפריט" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="תפריט נייד">
+    <a href="../index.html">ראשי</a>
+    <a href="../index.html#about">אודות</a>
+    <a href="../index.html#contact">צור קשר</a>
+    <a href="index.html">הזמנה</a>
+  </nav>
+
+  <main class="header-offset">
+    <div class="thankyou-page">
+      <div class="wrap">
+        <div class="thankyou-inner">
+
+          <!-- check mark -->
+          <div class="thankyou-mark" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round" color="#B63A22">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+
+          <div class="thankyou-eyebrow">
+            <span class="eyebrow">הזמנה התקבלה</span>
+          </div>
+
+          <h1 class="thankyou-title">תודה רבה!</h1>
+          <p class="thankyou-sub" id="ty-name-line">קיבלנו את ההזמנה שלכם.</p>
+          <p class="thankyou-sub-2">ניצור עמכם קשר בהקדם לאישור הפרטים הסופיים.</p>
+
+          <!-- order summary card — populated by JS -->
+          <div class="thankyou-summary" id="ty-summary" hidden>
+            <p class="thankyou-summary-title">סיכום ההזמנה</p>
+
+            <!-- order details: date, delivery -->
+            <div id="ty-details"></div>
+
+            <!-- items list -->
+            <div class="thankyou-items-rule"></div>
+            <div id="ty-items"></div>
+
+            <!-- total -->
+            <div class="thankyou-total-row">
+              <span class="thankyou-total-label">סה"כ</span>
+              <span class="thankyou-total-val" id="ty-total">—</span>
+            </div>
+          </div>
+
+          <!-- shown only when backend fetch fails -->
+          <div id="ty-retry" hidden>
+            <p class="thankyou-sub-2">לא הצלחנו לטעון את פרטי ההזמנה.</p>
+            <button onclick="location.reload()" class="btn-ghost">נסו שוב</button>
+          </div>
+
+          <div class="thankyou-actions">
+            <a href="../index.html" class="btn-primary">חזרה לעמוד הראשי</a>
+            <a href="index.html"    class="btn-ghost">הזמנה חדשה</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <div class="footer-logo">גולד<span class="logo-apos">'</span>ס</div>
+      <p class="footer-tagline">קייטרינג כשר לאירועים שלא שוכחים</p>
+    </div>
+    <div class="footer-rule"></div>
+    <div class="footer-contact">
+      <a href="tel:+972000000000" class="footer-link">050-000-0000</a>
+      <a href="mailto:info@golds.co.il" class="footer-link">info@golds.co.il</a>
+    </div>
+    <div class="footer-bottom-line"></div>
+    <div class="footer-legal">
+      <span>© 2024 גולד'ס</span>
+      <span class="footer-sep">·</span>
+      <a href="#">תנאי שימוש</a>
+      <span class="footer-sep">·</span>
+      <a href="#">פרטיות</a>
+    </div>
+  </footer>
+
+  <script src="../js/cart.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      var API_BASE    = 'http://localhost:3001';
+      var SESSION_KEY = 'golds_order_ref';
+
+      function fmt(n) {
+        return n.toLocaleString('he-IL') + ' ₪';
+      }
+
+      function formatDate(str) {
+        if (!str) return '';
+        var parts = str.split('-');
+        return parts.length === 3 ? parts[2] + '/' + parts[1] + '/' + parts[0] : str;
+      }
+
+      function renderOrder(order) {
+        var c = order.customer || {};
+
+        if (c.name) {
+          document.getElementById('ty-name-line').textContent =
+            'קיבלנו את ההזמנה של ' + c.name + '.';
+        }
+
+        var detailsEl = document.getElementById('ty-details');
+        var details   = [];
+        if (c.eventDate) {
+          details.push({ label: 'תאריך האירוע', val: formatDate(c.eventDate) });
+        }
+        details.push({
+          label: 'אופן קבלה',
+          val:   c.deliveryType === 'delivery' ? 'משלוח' : 'איסוף עצמי'
+        });
+        if (c.deliveryType === 'delivery' && c.address) {
+          details.push({ label: 'כתובת', val: c.address });
+        }
+        if (c.phone) {
+          details.push({ label: 'טלפון', val: c.phone });
+        }
+        details.forEach(function (d) {
+          var row = document.createElement('div');
+          row.className = 'thankyou-detail-row';
+          row.innerHTML =
+            '<span class="thankyou-detail-label">' + d.label + '</span>' +
+            '<span class="thankyou-detail-val">'   + d.val   + '</span>';
+          detailsEl.appendChild(row);
+        });
+
+        var itemsEl = document.getElementById('ty-items');
+        if (order.items && order.items.length) {
+          order.items.forEach(function (item) {
+            var row = document.createElement('div');
+            row.className = 'thankyou-item';
+            row.innerHTML =
+              '<span class="thankyou-item-name">' +
+                item.name +
+                '<span class="thankyou-item-qty"> × ' + item.qty + '</span>' +
+              '</span>' +
+              '<span class="thankyou-item-price">' + fmt(item.lineTotalShekel) + '</span>';
+            itemsEl.appendChild(row);
+          });
+        }
+
+        if (order.totalShekel !== undefined) {
+          document.getElementById('ty-total').textContent = fmt(order.totalShekel);
+        }
+
+        document.getElementById('ty-summary').hidden = false;
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var ref;
+        try { ref = sessionStorage.getItem(SESSION_KEY); } catch (_) {}
+
+        if (!ref) { return; }
+
+        fetch(API_BASE + '/api/orders/' + encodeURIComponent(ref))
+          .then(function (res) {
+            return res.json().then(function (data) {
+              return { ok: res.ok, data: data };
+            });
+          })
+          .then(function (result) {
+            if (!result.ok) { throw new Error('fetch failed'); }
+            try { sessionStorage.removeItem(SESSION_KEY); } catch (_) {}
+            renderOrder(result.data);
+          })
+          .catch(function () {
+            document.getElementById('ty-retry').hidden = false;
+          });
+      });
+
+      /* ── Hamburger ── */
+      var hamburger = document.querySelector('.hamburger');
+      var mobileNav = document.querySelector('.mobile-nav');
+      if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function () {
+          var open = mobileNav.classList.toggle('open');
+          hamburger.classList.toggle('open', open);
+          hamburger.setAttribute('aria-expanded', String(open));
+        });
+      }
+
+    }());
+  </script>
+
+</body>
+</html>

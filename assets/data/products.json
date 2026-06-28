@@ -1,0 +1,436 @@
+{
+  "version": "1.1",
+  "lastUpdated": "2026-06-26",
+  "products": [
+
+    {
+      "id": "cholent-golds-classic",
+      "category": "cholent",
+      "name": "הצ'ולנט של גולד'ס",
+      "description": "המתכון המקורי שלנו. חיטה, שעועית, בשר ותבלינים — מוכן לאט כל הלילה, כדרך הישנה.",
+      "price": 45,
+      "unit": "מנה",
+      "minQty": 5,
+      "image": null,
+      "available": true,
+      "tags": ["שבת", "חג", "בשר", "קלאסי"]
+    },
+
+    {
+      "id": "cholent-family",
+      "category": "cholent",
+      "name": "צ'ולנט משפחתי",
+      "description": "מנה גדולה המיועדת לשולחן משפחתי. אותו מתכון אהוב, כמות שמספיקה לכל הסביבה.",
+      "price": 120,
+      "unit": "סיר",
+      "minQty": 1,
+      "image": null,
+      "available": true,
+      "tags": ["שבת", "משפחה", "בשר"]
+    },
+
+    {
+      "id": "cholent-event",
+      "category": "cholent",
+      "name": "צ'ולנט לאירועים",
+      "description": "צ'ולנט בכמויות גדולות לאירועים וכינוסים. מתואם מראש, מגיע חם ומוכן להגשה.",
+      "price": 38,
+      "unit": "מנה",
+      "minQty": 20,
+      "image": null,
+      "available": true,
+      "tags": ["אירוע", "כינוס", "שבת", "בשר", "כמות גדולה"]
+    },
+
+    {
+      "id": "meats-brisket",
+      "category": "meats",
+      "name": "חזה בקר מבושל לאט",
+      "description": "נתח בקר איכותי, מבושל שעות ארוכות עד שהוא רך ועסיסי. מוגש עם הרוטב שלו.",
+      "price": 68,
+      "unit": "מנה",
+      "minQty": 5,
+      "image": null,
+      "available": true,
+      "tags": ["בשר", "חג", "שבת", "קלאסי"]
+    },
+
+    {
+      "id": "meats-short-rib",
+      "category": "meats",
+      "name": "שורט ריב מעושן",
+      "description": "שורט ריב בקר מבושל לאט על עשן עץ תפוח, עד שהבשר נופל מהעצם.",
+      "price": 82,
+      "unit": "מנה",
+      "minQty": 5,
+      "image": null,
+      "available": true,
+      "tags": ["בשר", "אירוע", "פופולרי"]
+    },
+
+    {
+      "id": "meats-lamb-chops",
+      "category": "meats",
+      "name": "צלעות כבש בתנור",
+      "description": "צלעות כבש מתובלות בשום ועשבי תיבול, צלויות בתנור לשלמות.",
+      "price": 88,
+      "unit": "מנה",
+      "minQty": 4,
+      "image": null,
+      "available": true,
+      "tags": ["בשר", "אירוע", "חג", "פרמיום"]
+    },
+
+    {
+      "id": "meats-goulash",
+      "category": "meats",
+      "name": "גולאש בקר",
+      "description": "קוביות בקר ירכיים בתבשיל עגבניות ופלפלים. מנה מחממת ועמוקת טעם.",
+      "price": 58,
+      "unit": "מנה",
+      "minQty": 6,
+      "image": null,
+      "available": true,
+      "tags": ["בשר", "שבת", "קלאסי", "חורף"]
+    },
+
+    {
+      "id": "meats-meatballs",
+      "category": "meats",
+      "name": "קציצות בקר ברוטב",
+      "description": "קציצות בשר טחון עשירות, אפויות ברוטב עגבניות ביתי. מנה שמחה לכל שולחן.",
+      "price": 48,
+      "unit": "מנה",
+      "minQty": 8,
+      "image": null,
+      "available": true,
+      "tags": ["בשר", "שבת", "קלאסי", "פופולרי"]
+    },
+
+    {
+      "id": "meats-veal-roast",
+      "category": "meats",
+      "name": "צלי עגל בתנור",
+      "description": "נתח עגל שלם, צלוי לאט עם יין לבן וירקות שורש. עדין ומשובח.",
+      "price": 74,
+      "unit": "מנה",
+      "minQty": 5,
+      "image": null,
+      "available": true,
+      "tags": ["בשר", "חג", "פרמיום", "אירוע"]
+    },
+
+    {
+      "id": "chicken-pargit",
+      "category": "chicken",
+      "name": "פרגית שלמה מוחמצת",
+      "description": "פרגית שלמה בתיבול לימון, שום ועשבי תיבול, צלויה בתנור עד זהובה ופריכה.",
+      "price": 52,
+      "unit": "יחידה",
+      "minQty": 4,
+      "image": null,
+      "available": true,
+      "tags": ["עוף", "שבת", "קלאסי", "פופולרי"]
+    },
+
+    {
+      "id": "chicken-schnitzel",
+      "category": "chicken",
+      "name": "שניצל קלאסי",
+      "description": "חזה עוף מוכה ופרוס, בציפוי לחם פריך. המנה שכולם אוהבים.",
+      "price": 38,
+      "unit": "יחידה",
+      "minQty": 6,
+      "image": null,
+      "available": true,
+      "tags": ["עוף", "פופולרי", "קלאסי", "אירוע"]
+    },
+
+    {
+      "id": "chicken-thighs-moroccan",
+      "category": "chicken",
+      "name": "ירכיים בסגנון מרוקאי",
+      "description": "ירכי עוף עם זיתים, לימון כבוש וכוסברה. מנה עמוקה ועשירה בטעמים.",
+      "price": 46,
+      "unit": "מנה",
+      "minQty": 5,
+      "image": null,
+      "available": true,
+      "tags": ["עוף", "מרוקאי", "שבת", "חג"]
+    },
+
+    {
+      "id": "chicken-drums-honey",
+      "category": "chicken",
+      "name": "שוקיים בדבש וחרדל",
+      "description": "שוקי עוף מצופות ברוטב דבש וחרדל גרגרים, צלויות עד לקרמל עדין.",
+      "price": 42,
+      "unit": "מנה",
+      "minQty": 6,
+      "image": null,
+      "available": true,
+      "tags": ["עוף", "פופולרי", "אירוע"]
+    },
+
+    {
+      "id": "chicken-breast-vegetables",
+      "category": "chicken",
+      "name": "חזה עוף בירקות",
+      "description": "חזה עוף רך, מאודה עם עגבניות, קישוא ופלפלים. קל ומשביע.",
+      "price": 44,
+      "unit": "מנה",
+      "minQty": 5,
+      "image": null,
+      "available": true,
+      "tags": ["עוף", "קל", "בריאות", "אירוע"]
+    },
+
+    {
+      "id": "fish-gefilte",
+      "category": "fish",
+      "name": "גפילטע פיש",
+      "description": "קציצות דג ביתיות במרק גזר וסלרי. המסורת שלא משתנה.",
+      "price": 32,
+      "unit": "יחידה",
+      "minQty": 10,
+      "image": null,
+      "available": true,
+      "tags": ["דגים", "שבת", "חג", "מסורתי", "קלאסי"]
+    },
+
+    {
+      "id": "fish-salmon",
+      "category": "fish",
+      "name": "סלמון בתנור",
+      "description": "פילה סלמון במרינדת לימון, שמיר ושמן זית. רך, עשיר ועדין.",
+      "price": 72,
+      "unit": "מנה",
+      "minQty": 4,
+      "image": null,
+      "available": true,
+      "tags": ["דגים", "פרמיום", "אירוע", "שבת"]
+    },
+
+    {
+      "id": "fish-sea-bream",
+      "category": "fish",
+      "name": "דג דניס שלם בתנור",
+      "description": "דג דניס שלם עם שום, לימון ועגבניות שרי. פשוט ומדויק.",
+      "price": 85,
+      "unit": "יחידה",
+      "minQty": 3,
+      "image": null,
+      "available": true,
+      "tags": ["דגים", "פרמיום", "אירוע", "חג"]
+    },
+
+    {
+      "id": "fish-patties",
+      "category": "fish",
+      "name": "קציצות דג ביתיות",
+      "description": "קציצות דג לבן מתובלות בעשבי תיבול ירוקים. עדינות ואהובות.",
+      "price": 36,
+      "unit": "מנה",
+      "minQty": 8,
+      "image": null,
+      "available": true,
+      "tags": ["דגים", "קלאסי", "שבת", "פרווה"]
+    },
+
+    {
+      "id": "fish-tuna-seared",
+      "category": "fish",
+      "name": "סטייק טונה על מחבת",
+      "description": "סטייק טונה טרי בציפוי שומשום, צרוב על מחבת ברזל חמה. מדויק ורענן.",
+      "price": 68,
+      "unit": "מנה",
+      "minQty": 4,
+      "image": null,
+      "available": true,
+      "tags": ["דגים", "פרמיום", "אירוע"]
+    },
+
+    {
+      "id": "salads-hummus",
+      "category": "salads",
+      "name": "חומוס ביתי",
+      "description": "חומוס גרגרים אמיתי, טחון חלק עם טחינה ולימון. לא מהקופסה.",
+      "price": 22,
+      "unit": "מנה",
+      "minQty": 6,
+      "image": null,
+      "available": true,
+      "tags": ["פרווה", "קלאסי", "פופולרי", "שבת"]
+    },
+
+    {
+      "id": "salads-tehina",
+      "category": "salads",
+      "name": "טחינה גולמית",
+      "description": "טחינה מגולמי שומשום, עם מיץ לימון ומלח. נקייה, מלאה, אמיתית.",
+      "price": 18,
+      "unit": "מנה",
+      "minQty": 6,
+      "image": null,
+      "available": true,
+      "tags": ["פרווה", "קלאסי", "שבת"]
+    },
+
+    {
+      "id": "salads-israeli",
+      "category": "salads",
+      "name": "סלט ירקות ישראלי",
+      "description": "עגבנייה, מלפפון ופלפל קצוצים דק. טרי, קל, קלאסי.",
+      "price": 20,
+      "unit": "מנה",
+      "minQty": 8,
+      "image": null,
+      "available": true,
+      "tags": ["פרווה", "קלאסי", "קל", "שבת"]
+    },
+
+    {
+      "id": "salads-moroccan-carrot",
+      "category": "salads",
+      "name": "גזר מרוקאי",
+      "description": "גזר מבושל עם כמון ופפריקה, חריף עדין. מתוק ומסעיר בו-זמנית.",
+      "price": 19,
+      "unit": "מנה",
+      "minQty": 8,
+      "image": null,
+      "available": true,
+      "tags": ["פרווה", "מרוקאי", "חריף", "שבת"]
+    },
+
+    {
+      "id": "salads-eggplant",
+      "category": "salads",
+      "name": "חציל קלוי",
+      "description": "חציל שרוף ישירות על האש, עם שום, לימון ופטרוזיליה. עמוק ומעושן.",
+      "price": 22,
+      "unit": "מנה",
+      "minQty": 6,
+      "image": null,
+      "available": true,
+      "tags": ["פרווה", "מעושן", "קלאסי", "שבת"]
+    },
+
+    {
+      "id": "salads-cabbage",
+      "category": "salads",
+      "name": "סלט כרוב לבן",
+      "description": "כרוב לבן קצוץ דק, לימון ושמן. פריך ורענן לצד כל מנה.",
+      "price": 16,
+      "unit": "מנה",
+      "minQty": 10,
+      "image": null,
+      "available": true,
+      "tags": ["פרווה", "קל", "שבת", "אירוע"]
+    },
+
+    {
+      "id": "salads-beets",
+      "category": "salads",
+      "name": "סלט סלק",
+      "description": "סלק מבושל עם לימון, שמן זית ושמיר. צבע, מתיקות, אדמה.",
+      "price": 20,
+      "unit": "מנה",
+      "minQty": 8,
+      "image": null,
+      "available": true,
+      "tags": ["פרווה", "קלאסי", "שבת"]
+    },
+
+    {
+      "id": "salads-tabouleh",
+      "category": "salads",
+      "name": "טבולה",
+      "description": "פטרוזיליה קצוצה דק, עגבנייה, בורגול ולימון. רענן ומינטי.",
+      "price": 22,
+      "unit": "מנה",
+      "minQty": 6,
+      "image": null,
+      "available": true,
+      "tags": ["פרווה", "קל", "אירוע", "שבת"]
+    },
+
+    {
+      "id": "desserts-halva",
+      "category": "desserts",
+      "name": "חלווה טחינה ופיסטוק",
+      "description": "חלווה אמיתית מגולמי שומשום, עם שכבת פיסטוק ירוקה. עשירה ועדינה.",
+      "price": 28,
+      "unit": "פרוסה",
+      "minQty": 5,
+      "image": null,
+      "available": true,
+      "tags": ["פרווה", "מסורתי", "שבת", "קינוח"]
+    },
+
+    {
+      "id": "desserts-malabi",
+      "category": "desserts",
+      "name": "מלבי וניל",
+      "description": "מלבי קרמי בטעם וניל, עם רוטב ורדים וקוקוס. קינוח עדין ומושלם.",
+      "price": 24,
+      "unit": "יחידה",
+      "minQty": 6,
+      "image": null,
+      "available": true,
+      "tags": ["פרווה", "קינוח", "קל", "אירוע"]
+    },
+
+    {
+      "id": "desserts-baklava",
+      "category": "desserts",
+      "name": "בקלאווה",
+      "description": "שכבות בצק פילו עם אגוזים ודבש. פריכה, מתוקה, מסורתית.",
+      "price": 14,
+      "unit": "יחידה",
+      "minQty": 10,
+      "image": null,
+      "available": true,
+      "tags": ["פרווה", "מסורתי", "אירוע", "קינוח"]
+    },
+
+    {
+      "id": "desserts-kokosh",
+      "category": "desserts",
+      "name": "עוגת קוקוש",
+      "description": "עוגת שמר רכה במילוי קקאו ואגוזי מלך. ביתית, ישנה, אהובה.",
+      "price": 18,
+      "unit": "פרוסה",
+      "minQty": 6,
+      "image": null,
+      "available": true,
+      "tags": ["פרווה", "קינוח", "קלאסי", "שבת"]
+    },
+
+    {
+      "id": "desserts-cheesecake",
+      "category": "desserts",
+      "name": "עוגת גבינה אפויה",
+      "description": "עוגת גבינה אפויה על בסיס ביסקוויט, עם קרם לימון עדין.",
+      "price": 26,
+      "unit": "פרוסה",
+      "minQty": 5,
+      "image": null,
+      "available": true,
+      "tags": ["חלבי", "קינוח", "אירוע", "פרמיום"]
+    },
+
+    {
+      "id": "desserts-fruit-platter",
+      "category": "desserts",
+      "name": "מגש פירות עונתיים",
+      "description": "פירות עונתיים טריים, פרוסים יפה. סיום קל ורענן לסוף הארוחה.",
+      "price": 35,
+      "unit": "מנה",
+      "minQty": 4,
+      "image": null,
+      "available": true,
+      "tags": ["פרווה", "קל", "אירוע", "שבת", "קינוח"]
+    }
+
+  ]
+}

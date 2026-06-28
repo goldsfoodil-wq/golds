@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>הזמנות | גולד׳ס ניהול</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <span class="topbar-logo">גולד<span>׳</span>ס ניהול</span>
+    <nav class="topbar-nav">
+      <a href="index.html"  class="topbar-link">דשבורד</a>
+      <a href="orders.html" class="topbar-link active">הזמנות</a>
+    </nav>
+    <button class="topbar-logout" id="btn-logout">התנתקות</button>
+  </header>
+
+  <main class="admin-wrap">
+
+    <div class="section-card">
+
+      <!-- Search -->
+      <div class="search-wrap">
+        <input class="search-input" type="search" id="search-input"
+               placeholder="חיפוש לפי שם, טלפון או מס׳ הזמנה" />
+      </div>
+
+      <!-- Filter tabs -->
+      <div class="filter-row" id="filter-row">
+        <button class="filter-tab" data-status="all">הכל</button>
+        <button class="filter-tab" data-status="pending">ממתין</button>
+        <button class="filter-tab" data-status="paid">שולם</button>
+        <button class="filter-tab" data-status="preparing">בהכנה</button>
+        <button class="filter-tab" data-status="ready">מוכן</button>
+        <button class="filter-tab" data-status="delivered">סופק</button>
+        <button class="filter-tab" data-status="cancelled">בוטל</button>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>מס׳ הזמנה</th>
+              <th>שם</th>
+              <th>טלפון</th>
+              <th>וואטסאפ</th>
+              <th>תאריך אירוע</th>
+              <th>סוג</th>
+              <th>סה"כ</th>
+              <th>תשלום</th>
+              <th>סטטוס</th>
+            </tr>
+          </thead>
+          <tbody id="orders-body">
+            <tr><td colspan="9" class="empty-state">טוען...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination" hidden>
+        <button class="btn-page" id="btn-prev">→ קודם</button>
+        <span id="page-info"></span>
+        <button class="btn-page" id="btn-next">← הבא</button>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="admin.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      if (!ADMIN.requireAuth()) { return; }
+
+      document.getElementById('btn-logout').addEventListener('click', ADMIN.logout);
+
+      var currentStatus = 'all';
+      var currentPage   = 1;
+      var searchTimer   = null;
+      var currentSearch = '';
+
+      /* ── Filter tabs ── */
+      var filterRow = document.getElementById('filter-row');
+      filterRow.addEventListener('click', function (e) {
+        var tab = e.target.closest('.filter-tab');
+        if (!tab) { return; }
+        currentStatus = tab.dataset.status;
+        currentPage   = 1;
+        filterRow.querySelectorAll('.filter-tab').forEach(function (t) {
+          t.classList.toggle('active', t.dataset.status === currentStatus);
+        });
+        load();
+      });
+      /* activate default */
+      filterRow.querySelector('[data-status="all"]').classList.add('active');
+
+      /* ── Search ── */
+      document.getElementById('search-input').addEventListener('input', function () {
+        clearTimeout(searchTimer);
+        var val = this.value.trim();
+        searchTimer = setTimeout(function () {
+          currentSearch = val;
+          currentPage   = 1;
+          load();
+        }, 300);
+      });
+
+      /* ── Pagination ── */
+      document.getElementById('btn-prev').addEventListener('click', function () {
+        if (currentPage > 1) { currentPage--; load(); }
+      });
+      document.getElementById('btn-next').addEventListener('click', function () {
+        currentPage++;
+        load();
+      });
+
+      /* ── Load orders ── */
+      function load() {
+        var qs = '?page=' + currentPage;
+        if (currentStatus && currentStatus !== 'all') { qs += '&status=' + currentStatus; }
+        if (currentSearch) { qs += '&search=' + encodeURIComponent(currentSearch); }
+
+        ADMIN.apiFetch('/api/admin/orders' + qs)
+          .then(function (r) {
+            if (!r.ok) { throw new Error('orders failed'); }
+            renderOrders(r.data);
+          })
+          .catch(function () {
+            document.getElementById('orders-body').innerHTML =
+              '<tr><td colspan="9" class="empty-state">שגיאה בטעינת הנתונים</td></tr>';
+          });
+      }
+
+      function renderOrders(data) {
+        var tbody = document.getElementById('orders-body');
+        var pag   = document.getElementById('pagination');
+
+        if (!data.orders || data.orders.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="9" class="empty-state">אין הזמנות</td></tr>';
+          pag.hidden = true;
+          return;
+        }
+
+        tbody.innerHTML = data.orders.map(function (o) {
+          return '<tr data-id="' + o.id + '">' +
+            '<td class="col-ref">' + o.orderRef + '</td>' +
+            '<td class="col-name">' + esc(o.name) + '</td>' +
+            '<td>' + o.phone + '</td>' +
+            '<td onclick="event.stopPropagation()">' + ADMIN.waBtn(o.phone) + '</td>' +
+            '<td>' + ADMIN.formatDate(o.eventDate) + '</td>' +
+            '<td>' + (o.deliveryType === 'delivery' ? 'משלוח' : 'איסוף') + '</td>' +
+            '<td>' + ADMIN.fmtMoney(o.totalShekel) + '</td>' +
+            '<td>' + ADMIN.paymentBadge(o.paymentStatus) + '</td>' +
+            '<td onclick="event.stopPropagation()">' + ADMIN.statusSelectHTML(o.status, o.id) + '</td>' +
+            '</tr>';
+        }).join('');
+
+        /* row click → detail */
+        tbody.querySelectorAll('tr[data-id]').forEach(function (row) {
+          row.addEventListener('click', function () {
+            window.location.href = 'order.html?id=' + this.dataset.id;
+          });
+        });
+
+        /* inline status change */
+        tbody.querySelectorAll('.status-select').forEach(function (sel) {
+          sel.addEventListener('change', function () {
+            var id     = this.dataset.id;
+            var status = this.value;
+            var orig   = this;
+            ADMIN.apiFetch('/api/admin/orders/' + id + '/status', {
+              method: 'PATCH',
+              body:   JSON.stringify({ status: status })
+            })
+            .then(function (r) {
+              if (!r.ok) { throw new Error('patch failed'); }
+              /* update badge in same row if needed — just keep select value */
+            })
+            .catch(function () {
+              alert('לא הצלחנו לעדכן את הסטטוס');
+              load(); /* reload to restore correct state */
+            });
+          });
+        });
+
+        /* pagination */
+        if (data.pages > 1) {
+          pag.hidden = false;
+          document.getElementById('page-info').textContent = 'עמוד ' + data.page + ' מתוך ' + data.pages;
+          document.getElementById('btn-prev').disabled = data.page <= 1;
+          document.getElementById('btn-next').disabled = data.page >= data.pages;
+        } else {
+          pag.hidden = true;
+        }
+      }
+
+      function esc(s) {
+        return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      }
+
+      load();
+
+    }());
+  </script>
+
+</body>
+</html>

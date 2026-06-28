@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>דגים | הזמנה | גולד'ס</title>
+  <meta name="description" content="דגים טריים ומנות ים של גולד'ס — סלמון, דניס, גפילטע פיש ועוד. כשר, טרי, מדויק." />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/footer.css" />
+  <link rel="stylesheet" href="../css/category.css" />
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="header-logo">גולד<span class="logo-apos">'</span>ס</a>
+      <nav class="header-nav" aria-label="ניווט ראשי">
+        <a href="../index.html">ראשי</a>
+        <a href="../index.html#about">אודות</a>
+        <a href="../index.html#contact">צור קשר</a>
+        <a href="index.html" class="active">הזמנה</a>
+      </nav>
+      <a href="cart.html" class="header-cart" aria-label="עגלת קניות">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        עגלה
+        <span class="cart-badge" aria-live="polite"></span>
+      </a>
+      <button class="hamburger" aria-label="פתח תפריט" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="תפריט נייד">
+    <a href="../index.html">ראשי</a>
+    <a href="../index.html#about">אודות</a>
+    <a href="../index.html#contact">צור קשר</a>
+    <a href="index.html" class="active">הזמנה</a>
+  </nav>
+
+  <main class="header-offset">
+
+    <!-- ── Category hero ── -->
+    <section class="cat-hero">
+      <div class="cat-hero-overlay" aria-hidden="true"></div>
+      <div class="wrap cat-hero-inner">
+        <span class="eyebrow">דגים · גולד'ס</span>
+        <h1 class="cat-title">דגים</h1>
+        <p class="cat-sub">
+          דגים טריים ומנות ים בטעמים עדינים ועשירים.<br>
+          מוכן ביום ההגשה בלבד.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── Breadcrumb ── -->
+    <div class="breadcrumb">
+      <div class="wrap">
+        <nav class="breadcrumb-inner" aria-label="מיקום בדף">
+          <a href="index.html">הזמנה</a>
+          <span class="breadcrumb-sep" aria-hidden="true">›</span>
+          <span aria-current="page">דגים</span>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ── Products ── -->
+    <section class="cat-section">
+      <div class="wrap">
+
+        <div class="cat-section-head">
+          <span class="eyebrow">בחרו מנה</span>
+          <h2 class="cat-section-title">מה מתאים לכם?</h2>
+        </div>
+
+        <div class="product-grid" data-category="fish"></div>
+
+        <p class="min-order-notice">
+          מינימום הזמנה: 3–10 יחידות לפי סוג הדג
+          &nbsp;·&nbsp;
+          הדגים מוכנים טרי ביום ההגשה בלבד — יש לתאם מראש
+        </p>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <div class="footer-logo">גולד<span class="logo-apos">'</span>ס</div>
+      <p class="footer-tagline">קייטרינג כשר לאירועים שלא שוכחים</p>
+    </div>
+    <div class="footer-rule"></div>
+    <div class="footer-contact">
+      <a href="tel:+972000000000" class="footer-link">050-000-0000</a>
+      <a href="mailto:info@golds.co.il" class="footer-link">info@golds.co.il</a>
+    </div>
+    <div class="footer-bottom-line"></div>
+    <div class="footer-legal">
+      <span>© 2024 גולד'ס</span>
+      <span class="footer-sep">·</span>
+      <a href="#">תנאי שימוש</a>
+      <span class="footer-sep">·</span>
+      <a href="#">פרטיות</a>
+    </div>
+  </footer>
+
+  <script src="../js/cart.js"></script>
+  <script src="../js/products.js"></script>
+  <script>
+    (function () {
+      var hamburger = document.querySelector('.hamburger');
+      var mobileNav = document.querySelector('.mobile-nav');
+      if (!hamburger || !mobileNav) return;
+      hamburger.addEventListener('click', function () {
+        var open = mobileNav.classList.toggle('open');
+        hamburger.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', String(open));
+      });
+    }());
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>הצ'ולנט של גולד'ס | הזמנה</title>
+  <meta name="description" content="הצ'ולנט המסורתי של גולד'ס — מבושל לאט כל הלילה, כדרך הישנה. הזמינו לשבת, לחג ולאירועים." />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/footer.css" />
+  <link rel="stylesheet" href="../css/category.css" />
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="header-logo">גולד<span class="logo-apos">'</span>ס</a>
+      <nav class="header-nav" aria-label="ניווט ראשי">
+        <a href="../index.html">ראשי</a>
+        <a href="../index.html#about">אודות</a>
+        <a href="../index.html#contact">צור קשר</a>
+        <a href="index.html" class="active">הזמנה</a>
+      </nav>
+      <a href="cart.html" class="header-cart" aria-label="עגלת קניות">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        עגלה
+        <span class="cart-badge" aria-live="polite"></span>
+      </a>
+      <button class="hamburger" aria-label="פתח תפריט" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="תפריט נייד">
+    <a href="../index.html">ראשי</a>
+    <a href="../index.html#about">אודות</a>
+    <a href="../index.html#contact">צור קשר</a>
+    <a href="index.html" class="active">הזמנה</a>
+  </nav>
+
+  <main class="header-offset">
+
+    <!-- ── Category hero ── -->
+    <section class="cat-hero">
+      <div class="cat-hero-overlay" aria-hidden="true"></div>
+      <div class="wrap cat-hero-inner">
+        <span class="eyebrow">מנה מיוחדת · גולד'ס</span>
+        <h1 class="cat-title">הצ'ולנט<br>של גולד'ס</h1>
+        <p class="cat-sub">
+          המתכון שהפך אותנו למה שאנחנו.<br>
+          מבושל לאט כל הלילה, כדרך הישנה.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── Breadcrumb ── -->
+    <div class="breadcrumb">
+      <div class="wrap">
+        <nav class="breadcrumb-inner" aria-label="מיקום בדף">
+          <a href="index.html">הזמנה</a>
+          <span class="breadcrumb-sep" aria-hidden="true">›</span>
+          <span aria-current="page">הצ'ולנט של גולד'ס</span>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ── Products ── -->
+    <section class="cat-section">
+      <div class="wrap">
+
+        <div class="cat-section-head">
+          <span class="eyebrow">בחרו מנה</span>
+          <h2 class="cat-section-title">מה מתאים לכם?</h2>
+        </div>
+
+        <!--
+          products.js finds this element on DOMContentLoaded,
+          reads data-category="cholent", fetches products.json,
+          filters by category, and injects product cards here.
+        -->
+        <div class="product-grid" data-category="cholent"></div>
+
+        <p class="min-order-notice">
+          מינימום הזמנה: 5 מנות לצ'ולנט קלאסי
+          &nbsp;·&nbsp;
+          20 מנות לצ'ולנט אירועים
+          &nbsp;·&nbsp;
+          יש לתאם הזמנות שבת עד יום שישי בשעה 12:00
+        </p>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <div class="footer-logo">גולד<span class="logo-apos">'</span>ס</div>
+      <p class="footer-tagline">קייטרינג כשר לאירועים שלא שוכחים</p>
+    </div>
+    <div class="footer-rule"></div>
+    <div class="footer-contact">
+      <a href="tel:+972000000000" class="footer-link">050-000-0000</a>
+      <a href="mailto:info@golds.co.il" class="footer-link">info@golds.co.il</a>
+    </div>
+    <div class="footer-bottom-line"></div>
+    <div class="footer-legal">
+      <span>© 2024 גולד'ס</span>
+      <span class="footer-sep">·</span>
+      <a href="#">תנאי שימוש</a>
+      <span class="footer-sep">·</span>
+      <a href="#">פרטיות</a>
+    </div>
+  </footer>
+
+  <!-- cart.js must load before products.js — it exposes window.GoldsCart -->
+  <script src="../js/cart.js"></script>
+  <script src="../js/products.js"></script>
+  <script>
+    (function () {
+      var hamburger = document.querySelector('.hamburger');
+      var mobileNav = document.querySelector('.mobile-nav');
+      if (!hamburger || !mobileNav) return;
+      hamburger.addEventListener('click', function () {
+        var open = mobileNav.classList.toggle('open');
+        hamburger.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', String(open));
+      });
+    }());
+  </script>
+
+</body>
+</html>

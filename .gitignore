@@ -1,0 +1,10 @@
+# Environment — never commit secrets
+.env
+
+# SQLite runtime files
+server/data/*.sqlite
+server/data/*.sqlite-wal
+server/data/*.sqlite-shm
+
+# Dependencies
+server/node_modules/
